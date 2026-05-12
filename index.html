@@ -1073,54 +1073,128 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
         </div>
       </div>
 
-      <!-- ─ STEP 3: Pay (Web3 Confirm style) ─ -->
+      <!-- ─ STEP 3: Pay — Smart Wallet Flow ─ -->
       <div id="step3" style="display:none">
         <div class="pay3-shell">
 
-          <!-- Inner payment card -->
+          <!-- Auth ribbon (returning user) -->
+          <div id="pay3AuthRibbon" style="display:none;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:10px 14px;margin-bottom:12px;display:none;align-items:center;gap:10px;width:100%">
+            <i class="fas fa-shield-alt" style="color:var(--green);font-size:.9rem"></i>
+            <div style="flex:1">
+              <div style="font-family:'DM Mono',monospace;font-size:.72rem;color:var(--green)">Authorized wallet</div>
+              <div style="font-family:'DM Mono',monospace;font-size:.66rem;color:var(--muted)" id="pay3AuthAddr">—</div>
+            </div>
+            <button onclick="clearSession()" style="background:none;border:none;color:var(--muted2);font-size:.65rem;cursor:pointer;font-family:'DM Mono',monospace">Change</button>
+          </div>
+
+          <!-- Payment Card -->
           <div class="pay3-card">
             <div class="pay3-close" onclick="closeCheckout()">✕</div>
-
             <div class="pay3-label">PURCHASE BELLY PASS</div>
-
             <div class="pay3-amount">
               <span class="pay3-num">2</span>
               <span class="pay3-unit">USDT</span>
             </div>
+            <div class="pay3-meta">Valid 3 days &nbsp;·&nbsp; All power-ups &nbsp;·&nbsp; TRON TRC-20</div>
 
-            <div class="pay3-meta">
-              Valid 3 days &nbsp;·&nbsp; All power-ups included &nbsp;·&nbsp; TRON network
+            <!-- STATE: detecting -->
+            <div id="p3Detecting">
+              <button class="pay3-waiting-btn" disabled style="background:rgba(255,255,255,.06);color:rgba(255,255,255,.4)">
+                <span class="pay3-spinner" style="border-color:rgba(255,255,255,.2);border-top-color:rgba(255,255,255,.5)"></span>
+                Detecting wallet...
+              </button>
             </div>
 
-            <!-- State A: idle — connect wallet -->
-            <div id="pay3Idle">
+            <!-- STATE: no wallet / regular mobile browser -->
+            <div id="p3NoWallet" style="display:none">
+              <div style="margin-bottom:12px">
+                <!-- Bitget deep link -->
+                <a id="bitgetDeepLink" href="#" class="pay3-connect-btn" style="display:flex;text-decoration:none;margin-bottom:10px" onclick="openBitgetDeepLink(event)">
+                  <i class="fas fa-mobile-alt"></i>
+                  Open in Bitget Wallet App
+                </a>
+                <!-- TronLink deep link -->
+                <a id="tronlinkDeepLink" href="#" onclick="openTronLinkDeepLink(event)"
+                  style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;background:rgba(255,6,10,.1);border:1px solid rgba(255,6,10,.3);color:#ff7777;border-radius:12px;font-family:'DM Mono',monospace;font-size:.82rem;text-decoration:none;transition:all .2s">
+                  <i class="fas fa-link"></i>
+                  Open in TronLink App
+                </a>
+              </div>
+              <div class="wallet-separator" style="margin:12px 0">
+                <div class="ws-line"></div><span class="ws-text">or send manually</span><div class="ws-line"></div>
+              </div>
+              <button class="pay3-send-btn" onclick="goManual()" style="background:rgba(255,255,255,.06);border:1px solid var(--border)">
+                <i class="fas fa-copy"></i> Copy Address &amp; Send Manually
+              </button>
+            </div>
+
+            <!-- STATE: wallet detected, not connected -->
+            <div id="p3Idle" style="display:none">
               <button class="pay3-connect-btn" onclick="triggerWalletConnect()">
                 <i class="fas fa-wallet"></i>
                 Connect Wallet to Pay
               </button>
             </div>
 
-            <!-- State B: waiting confirmation -->
-            <div id="pay3Waiting" style="display:none">
+            <!-- STATE: waiting / connecting -->
+            <div id="p3Waiting" style="display:none">
               <button class="pay3-waiting-btn" disabled>
                 <span class="pay3-spinner"></span>
                 WAITING FOR CONFIRMATION...
               </button>
             </div>
 
-            <!-- State C: wallet connected, ready to send -->
-            <div id="pay3Ready" style="display:none">
-              <div class="pay3-wallet-info" id="pay3WalletInfo">
+            <!-- STATE: connected, ready to send tx -->
+            <div id="p3Ready" style="display:none">
+              <div class="pay3-wallet-info">
                 <i class="fas fa-check-circle" style="color:var(--green)"></i>
-                <span id="pay3WalletAddr">Wallet connected</span>
+                <span id="p3WalletAddr">Connected</span>
               </div>
-              <button class="pay3-send-btn" onclick="confirmSend()">
+              <button class="pay3-send-btn" id="p3SendBtn" onclick="sendUSDT()">
                 <i class="fas fa-paper-plane"></i>
-                Send 2 USDT &nbsp;→&nbsp; TRON
+                Send 2 USDT → TRON
               </button>
             </div>
 
-            <div class="pay3-foot" id="pay3Foot">Requires wallet connected to TRON network</div>
+            <!-- STATE: tx broadcasting -->
+            <div id="p3Sending" style="display:none">
+              <button class="pay3-waiting-btn" disabled style="background:linear-gradient(270deg,#1a7a5e,#26a17b,#1a7a5e);background-size:300% 100%;animation:shimmer 1.5s linear infinite">
+                <span class="pay3-spinner" style="border-color:rgba(255,255,255,.3);border-top-color:#fff"></span>
+                BROADCASTING TRANSACTION...
+              </button>
+            </div>
+
+            <!-- STATE: tx success — show hash -->
+            <div id="p3TxDone" style="display:none">
+              <div style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);border-radius:12px;padding:14px;margin-bottom:12px;text-align:left">
+                <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--green);letter-spacing:1px;margin-bottom:6px">✓ TRANSACTION CONFIRMED</div>
+                <div style="font-family:'DM Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.7);word-break:break-all;line-height:1.6" id="p3TxHashDisplay">—</div>
+              </div>
+              <button class="pay3-send-btn" onclick="proceedWithAutoHash()" style="background:linear-gradient(135deg,var(--amber),var(--amber-dark));color:#0a0805">
+                <i class="fas fa-arrow-right"></i>
+                Continue with This TX
+              </button>
+            </div>
+
+            <!-- STATE: manual copy address -->
+            <div id="p3Manual" style="display:none">
+              <div style="background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.15);border-radius:10px;padding:12px 14px;margin-bottom:10px">
+                <div style="font-family:'DM Mono',monospace;font-size:.64rem;color:var(--muted2);letter-spacing:1.2px;margin-bottom:6px">SEND TO ADDRESS</div>
+                <div style="font-family:'DM Mono',monospace;font-size:.74rem;color:var(--amber);word-break:break-all;line-height:1.6;user-select:all" id="p3ManualAddr">—</div>
+              </div>
+              <div style="background:rgba(38,161,123,.07);border:1px solid rgba(38,161,123,.2);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                <span style="font-family:'DM Mono',monospace;font-size:.76rem;color:var(--muted)">Amount (exact):</span>
+                <span style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--usdt)">2 USDT TRC-20</span>
+              </div>
+              <button class="copy-addr-btn" onclick="copyManualAddr()" style="margin-bottom:10px">
+                <i class="far fa-copy"></i> <span id="p3CopyTxt">Copy Address</span>
+              </button>
+              <button class="pay3-send-btn" onclick="goStep(4)" style="background:linear-gradient(135deg,var(--amber),var(--amber-dark));color:#0a0805">
+                I've Sent — Enter TX Hash →
+              </button>
+            </div>
+
+            <div class="pay3-foot" id="pay3Foot">Detecting wallet environment...</div>
           </div>
 
           <button class="modal-btn modal-btn-outline" onclick="goStep(2)" style="margin-top:14px;opacity:.6;font-size:.76rem;padding:10px">← Back</button>
@@ -1219,23 +1293,67 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
 
 <script>
 /* ══════════════════════════════════════════════════
-   CONFIG — Replace TRON_ADDRESS with real address
+   CONFIG
 ══════════════════════════════════════════════════ */
-const TRON_ADDRESS = 'TAipDFyZhtUrnAD43kH7Ty5ni1VX3qtLQQ';
-const AMOUNT_USDT  = 820;
+const TRON_ADDRESS   = 'TAipDFyZhtUrnAD43kH7Ty5ni1VX3qtLQQ'; // ← ganti dgn alamat asli
+const USDT_CONTRACT  = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t';   // USDT TRC-20 mainnet
+const AMOUNT_SUN     = 2_000_000;   // 2 USDT × 10^6
+const AMOUNT_USDT    = 800;
+const FEE_LIMIT      = 20_000_000;  // maks 20 TRX untuk fee
 
 /* ── State ── */
-let currentStep = 1;
-let orderId = '';
-let bitgetConnected = false;
-let bitgetTronAddr = '';
-let qrGenerated = false;
+let currentStep  = 1;
+let orderId      = '';
+let tronProvider = null; // injected tronWeb
+let connectedAddr= '';
+let autoTxHash   = '';   // hash dari on-chain tx, terisi otomatis
+let authSession  = null; // session tersimpan
 
-/* ── Open / Close ── */
+/* ════════════════════════════════════════════════
+   AUTH SESSION
+════════════════════════════════════════════════ */
+function loadSession() {
+  try {
+    const raw = localStorage.getItem('bb_auth');
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (Date.now() > s.expiry) { localStorage.removeItem('bb_auth'); return null; }
+    return s;
+  } catch { return null; }
+}
+
+function saveSession(addr, tg) {
+  const s = {
+    address  : addr,
+    tg       : tg,
+    sessionId: 'S' + Math.random().toString(36).substring(2,10).toUpperCase(),
+    connectedAt: Date.now(),
+    expiry   : Date.now() + 30 * 24 * 60 * 60 * 1000 // 30 hari
+  };
+  localStorage.setItem('bb_auth', JSON.stringify(s));
+  authSession = s;
+  return s;
+}
+
+function clearSession() {
+  localStorage.removeItem('bb_auth');
+  authSession = null;
+  connectedAddr = '';
+  tronProvider  = null;
+  showPay3('idle');
+  document.getElementById('pay3AuthRibbon').style.display = 'none';
+  showToast('Session cleared. Reconnect wallet.', 'info');
+}
+
+/* ════════════════════════════════════════════════
+   OPEN / CLOSE
+════════════════════════════════════════════════ */
 function openCheckout() {
+  authSession = loadSession();
   orderId = '#BP-' + Math.random().toString(36).substring(2,8).toUpperCase();
   document.getElementById('orderId').textContent = orderId;
   document.getElementById('successOrderId').textContent = orderId;
+  autoTxHash = '';
   goStep(1);
   document.getElementById('checkoutBackdrop').classList.add('open');
 }
@@ -1243,13 +1361,14 @@ function openCheckout() {
 function closeCheckout() {
   document.getElementById('checkoutBackdrop').classList.remove('open');
 }
-
 function handleBackdropClick(e) {
   if (e.target === document.getElementById('checkoutBackdrop')) closeCheckout();
 }
 
-/* ── Step Navigation ── */
-const stepTitles = ['', 'Order Review', 'Connect Wallet', 'Send Payment', 'Submit Proof'];
+/* ════════════════════════════════════════════════
+   STEP NAVIGATION
+════════════════════════════════════════════════ */
+const stepTitles = ['','Order Review','Connect Wallet','Send Payment','Submit Proof'];
 
 function goStep(n) {
   currentStep = n;
@@ -1257,153 +1376,304 @@ function goStep(n) {
     const el = document.getElementById('step' + i);
     if (el) el.style.display = (i === n) ? 'block' : 'none';
   }
-
-  // Update progress nodes (4 nodes for steps 1-4; step 5 = final)
-  const displayStep = Math.min(n, 4);
+  const d = Math.min(n, 4);
   for (let i = 1; i <= 4; i++) {
     const node = document.getElementById('sn' + i);
     const line = document.getElementById('sl' + i);
     if (node) {
-      if (i < displayStep) { node.className = 'step-node done'; node.textContent = '✓'; }
-      else if (i === displayStep) { node.className = 'step-node active'; node.textContent = i; }
-      else { node.className = 'step-node pending'; node.textContent = i; }
+      if (i < d)      { node.className = 'step-node done'; node.textContent = '✓'; }
+      else if (i === d){ node.className = 'step-node active'; node.textContent = i; }
+      else             { node.className = 'step-node pending'; node.textContent = i; }
     }
-    if (line) {
-      line.className = 'step-line' + (i < displayStep ? ' done' : i === displayStep ? ' active' : '');
-    }
+    if (line) line.className = 'step-line' + (i < d ? ' done' : i === d ? ' active' : '');
   }
-
-  const title = stepTitles[n] || 'Complete';
-  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalTitle').textContent = stepTitles[n] || 'Complete';
+  document.getElementById('stepProgress').style.display = n === 5 ? 'none' : 'flex';
   if (n === 3) initPay3();
-  if (n === 5) document.getElementById('stepProgress').style.display = 'none';
-  else document.getElementById('stepProgress').style.display = 'flex';
 }
 
-/* ── QR Code ── */
-function initQR() {
-  if (qrGenerated) return;
-  const qrDiv = document.getElementById('qrCode');
-  qrDiv.innerHTML = '';
-  if (typeof QRCode !== 'undefined') {
-    new QRCode(qrDiv, {
-      text: TRON_ADDRESS,
-      width: 160,
-      height: 160,
-      colorDark: '#000000',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M
-    });
-    qrGenerated = true;
+/* ════════════════════════════════════════════════
+   STEP 3 — SMART WALLET DETECTION
+════════════════════════════════════════════════ */
+function getTronWeb() {
+  // Priority: bitkeep → bitget → window.tronLink → window.tronWeb
+  if (window.bitkeep?.tronWeb)        return window.bitkeep.tronWeb;
+  if (window.bitget?.tronWeb)         return window.bitget.tronWeb;
+  if (window.tronLink?.tronWeb)       return window.tronLink.tronWeb;
+  if (window.tronWeb?.defaultAddress) return window.tronWeb;
+  return null;
+}
+
+async function initPay3() {
+  showPay3('detecting');
+  p3foot('Detecting wallet environment...');
+  document.getElementById('p3ManualAddr').textContent = TRON_ADDRESS;
+
+  // Check saved session
+  authSession = loadSession();
+  if (authSession) {
+    const ribbon = document.getElementById('pay3AuthRibbon');
+    ribbon.style.display = 'flex';
+    document.getElementById('pay3AuthAddr').textContent =
+      authSession.address.slice(0,8) + '...' + authSession.address.slice(-6) +
+      (authSession.tg ? ' · ' + authSession.tg : '');
+    connectedAddr = authSession.address;
   }
-  renderAddrChunks();
-}
 
-/* ── Address Chunks (readability) ── */
-function renderAddrChunks() {
-  const container = document.getElementById('addrChunks');
-  const addr = TRON_ADDRESS;
-  let html = '';
-  for (let i = 0; i < addr.length; i += 4) {
-    html += `<span class="addr-chunk">${addr.substring(i, i+4)}</span><wbr>`;
+  // If tg from session, pre-fill step 4
+  if (authSession?.tg) {
+    const tgInput = document.getElementById('tgUsernameInput');
+    if (tgInput && !tgInput.value) {
+      tgInput.value = authSession.tg;
+      validateTg(tgInput);
+    }
   }
-  container.innerHTML = html;
+
+  // Wait a tick then probe
+  await new Promise(r => setTimeout(r, 400));
+  const tw = getTronWeb();
+
+  if (tw) {
+    tronProvider = tw;
+    // Already unlocked?
+    const addr = tw.defaultAddress?.base58;
+    if (addr) {
+      connectedAddr = addr;
+      setP3Ready(addr);
+    } else {
+      showPay3('idle');
+      p3foot('Tap to connect your wallet');
+    }
+  } else {
+    // No injected provider — regular browser / mobile
+    buildDeepLinks();
+    showPay3('noWallet');
+    p3foot('Open your wallet app to continue');
+  }
 }
 
-/* ── Copy Address ── */
-function copyAddress() {
+function buildDeepLinks() {
+  // Bitget deeplink: bitkeep://bkconnect?action=...
+  // We redirect to the dApp URL inside the app browser
+  const dappUrl = encodeURIComponent(window.location.href + '#bellypass');
+  document.getElementById('bitgetDeepLink').href =
+    `bitkeep://bkconnect?action=open&url=${dappUrl}`;
+  document.getElementById('tronlinkDeepLink').href =
+    `tronlinkoutside://pull.activity?param=${encodeURIComponent(JSON.stringify({url: window.location.href + '#bellypass'}))}`;
+}
+
+function openBitgetDeepLink(e) {
+  e.preventDefault();
+  const dappUrl = encodeURIComponent(window.location.href + '#bellypass');
+  const deep = `bitkeep://bkconnect?action=open&url=${dappUrl}`;
+  window.location.href = deep;
+  // Fallback if app not installed
+  setTimeout(() => {
+    if (document.visibilityState !== 'hidden')
+      window.open('https://web3.bitget.com/en/wallet-download', '_blank');
+  }, 1800);
+  showToast('Opening Bitget Wallet...', 'info');
+}
+
+function openTronLinkDeepLink(e) {
+  e.preventDefault();
+  const url = window.location.href + '#bellypass';
+  window.location.href = `tronlinkoutside://pull.activity?param=${encodeURIComponent(JSON.stringify({url}))}`;
+  setTimeout(() => {
+    if (document.visibilityState !== 'hidden')
+      window.open('https://www.tronlink.org/', '_blank');
+  }, 1800);
+  showToast('Opening TronLink...', 'info');
+}
+
+function goManual() {
+  showPay3('manual');
+  p3foot('Send exactly 2 USDT (TRC-20) to this address');
+}
+
+function copyManualAddr() {
   navigator.clipboard.writeText(TRON_ADDRESS).then(() => {
-    const btn = document.getElementById('copyBtn');
-    const txt = document.getElementById('copyBtnText');
-    btn.classList.add('copied');
-    txt.textContent = 'Copied!';
-    showToast('Address copied! 🔴', 'ok');
-    setTimeout(() => { btn.classList.remove('copied'); txt.textContent = 'Copy Address'; }, 2500);
-  }).catch(() => {
-    showToast('Copy failed — select and copy manually', 'err');
+    document.getElementById('p3CopyTxt').textContent = 'Copied!';
+    showToast('Address copied! Send exactly 2 USDT TRC-20 🔴', 'ok');
+    setTimeout(() => document.getElementById('p3CopyTxt').textContent = 'Copy Address', 2500);
   });
 }
 
-/* ── Bitget Wallet Integration ── */
+/* ── Connect wallet (injected) ── */
+async function triggerWalletConnect() {
+  showPay3('waiting');
+  p3foot('Approve in your wallet...');
+  try {
+    // Request accounts
+    if (window.bitkeep?.tronLink) {
+      await window.bitkeep.tronLink.request({ method: 'tron_requestAccounts' });
+    } else if (window.tronLink) {
+      await window.tronLink.request({ method: 'tron_requestAccounts' });
+    }
+    await new Promise(r => setTimeout(r, 600));
+    const tw = getTronWeb();
+    if (!tw) throw new Error('no provider');
+    tronProvider = tw;
+    const addr = tw.defaultAddress?.base58;
+    if (!addr) throw new Error('no address');
+    connectedAddr = addr;
+    setP3Ready(addr);
+  } catch (e) {
+    showPay3('idle');
+    p3foot('Requires wallet connected to TRON network');
+    showToast('Connection cancelled or wallet not found.', 'err');
+  }
+}
+
+function setP3Ready(addr) {
+  document.getElementById('p3WalletAddr').textContent =
+    addr.slice(0,8) + '...' + addr.slice(-6);
+  showPay3('ready');
+  p3foot('Tap "Send" — your wallet will ask for approval');
+}
+
+/* ── Send USDT TRC-20 on-chain ── */
+async function sendUSDT() {
+  if (!tronProvider) { showToast('Wallet not connected.', 'err'); return; }
+
+  showPay3('sending');
+  p3foot('Broadcasting to TRON network...');
+
+  try {
+    // Build USDT TRC-20 transfer
+    const contract = await tronProvider.contract([{
+      constant: false,
+      inputs : [{ name:'_to', type:'address' }, { name:'_value', type:'uint256' }],
+      name   : 'transfer',
+      outputs: [{ name:'', type:'bool' }],
+      type   : 'Function'
+    }], USDT_CONTRACT);
+
+    const txId = await contract.transfer(TRON_ADDRESS, AMOUNT_SUN).send({
+      feeLimit  : FEE_LIMIT,
+      callValue : 0,
+      shouldPollResponse: false
+    });
+
+    if (!txId || typeof txId !== 'string') throw new Error('No txId returned');
+
+    autoTxHash = txId.toLowerCase();
+
+    // Auto-fill step 4 inputs
+    const txInput = document.getElementById('txHashInput');
+    txInput.value = autoTxHash;
+    validateTxHash(txInput);
+
+    // Save auth session (tg from step 4 filled later; save address now)
+    const tgNow = document.getElementById('tgUsernameInput').value.trim();
+    saveSession(connectedAddr, tgNow || '');
+
+    // Show TX done
+    document.getElementById('p3TxHashDisplay').textContent = autoTxHash;
+    showPay3('txDone');
+    p3foot('✓ On-chain confirmed · Proceeding...');
+    showToast('Transaction sent! TX hash auto-filled ✓', 'ok');
+
+  } catch (err) {
+    console.error('USDT transfer error:', err);
+    showPay3('ready');
+    p3foot('Transaction failed — try again');
+    if (err.message?.includes('cancel') || err.message?.includes('reject')) {
+      showToast('Transaction rejected in wallet.', 'err');
+    } else if (err.message?.includes('balance')) {
+      showToast('Insufficient USDT or TRX balance for fee.', 'err');
+    } else {
+      showToast('Transaction failed. Check TRONSCAN for details.', 'err');
+    }
+  }
+}
+
+function proceedWithAutoHash() {
+  // Step 4 already has hash — just go there
+  goStep(4);
+  showToast('TX hash auto-filled! Just add your Telegram username.', 'ok');
+}
+
+/* ── Show/hide pay3 sub-states ── */
+function showPay3(state) {
+  const states = ['detecting','noWallet','idle','waiting','ready','sending','txDone','manual'];
+  const map = {
+    detecting : 'p3Detecting',
+    noWallet  : 'p3NoWallet',
+    idle      : 'p3Idle',
+    waiting   : 'p3Waiting',
+    ready     : 'p3Ready',
+    sending   : 'p3Sending',
+    txDone    : 'p3TxDone',
+    manual    : 'p3Manual'
+  };
+  states.forEach(s => {
+    const el = document.getElementById(map[s]);
+    if (el) el.style.display = s === state ? (s === 'noWallet' ? 'block' : 'block') : 'none';
+  });
+}
+
+function p3foot(txt) {
+  const el = document.getElementById('pay3Foot');
+  if (el) el.textContent = txt;
+}
+
+/* ════════════════════════════════════════════════
+   STEP 2 — BITGET CONNECT (sidebar optional)
+════════════════════════════════════════════════ */
 async function connectBitget() {
   const btn = document.getElementById('bitgetBtn');
   const txt = document.getElementById('bitgetBtnText');
   txt.textContent = 'Connecting...';
   btn.disabled = true;
-
   try {
-    // Bitget Wallet injects window.bitkeep
-    const provider = window.bitkeep || window.bitget;
-
-    if (provider && provider.tronWeb) {
-      // Bitget TRON via tronWeb
-      await provider.tronWeb.request({ method: 'tron_requestAccounts' });
-      const addr = provider.tronWeb.defaultAddress.base58;
-      if (addr && validateTronAddress(addr)) {
-        setConnected(addr);
-        return;
-      }
+    const tw = getTronWeb();
+    if (tw) {
+      if (window.bitkeep?.tronLink)
+        await window.bitkeep.tronLink.request({ method: 'tron_requestAccounts' });
+      else if (window.tronLink)
+        await window.tronLink.request({ method: 'tron_requestAccounts' });
+      await new Promise(r => setTimeout(r, 400));
+      const addr = getTronWeb()?.defaultAddress?.base58;
+      if (addr) { connectedAddr = addr; tronProvider = getTronWeb(); setConnected(addr); return; }
     }
-
-    if (provider && provider.tronLink) {
-      await provider.tronLink.request({ method: 'tron_requestAccounts' });
-      const addr = provider.tronLink.tronWeb?.defaultAddress?.base58;
-      if (addr) { setConnected(addr); return; }
-    }
-
-    // Also check window.tronLink (standard TronLink / Bitget TRON)
-    if (window.tronLink) {
-      const res = await window.tronLink.request({ method: 'tron_requestAccounts' });
-      const addr = window.tronLink.tronWeb?.defaultAddress?.base58;
-      if (addr) { setConnected(addr); return; }
-    }
-
-    // Fallback: no wallet detected
-    showToast('Bitget Wallet not detected. Use mobile deeplink or skip.', 'info');
+    showToast('Wallet not detected. Open site inside Bitget app browser.', 'info');
     txt.textContent = 'Connect Bitget Wallet';
     btn.disabled = false;
-
-  } catch (e) {
+  } catch {
+    txt.textContent = 'Connect Bitget Wallet';
+    btn.disabled = false;
     showToast('Connection cancelled.', 'err');
-    txt.textContent = 'Connect Bitget Wallet';
-    btn.disabled = false;
   }
 }
 
 function setConnected(addr) {
-  bitgetConnected = true;
-  bitgetTronAddr = addr;
-  const btn = document.getElementById('bitgetBtn');
-  btn.classList.add('connected');
-  btn.disabled = false;
-  document.getElementById('bitgetBtnText').textContent = '✓ Bitget Connected';
+  document.getElementById('bitgetBtn').classList.add('connected');
+  document.getElementById('bitgetBtn').disabled = false;
+  document.getElementById('bitgetBtnText').textContent = '✓ Wallet Connected';
   document.getElementById('bitgetStatus').style.display = 'block';
   document.getElementById('bitgetAddr').textContent = 'Connected: ' + addr.slice(0,8) + '...' + addr.slice(-6);
-  showToast('Bitget Wallet connected! ✓', 'ok');
+  showToast('Wallet connected ✓', 'ok');
 }
 
-/* ── Validation ── */
-
-// TRC-20 address: starts with T, exactly 34 chars, base58 characters
+/* ════════════════════════════════════════════════
+   VALIDATION
+════════════════════════════════════════════════ */
 function validateTronAddress(addr) {
   return /^T[1-9A-HJ-NP-Za-km-z]{33}$/.test(addr);
 }
-
-// TRON TX hash: exactly 64 hex chars
 function validateTxHashValue(hash) {
-  const clean = hash.trim().replace(/^0x/i, '');
-  return /^[0-9a-fA-F]{64}$/.test(clean);
+  return /^[0-9a-fA-F]{64}$/.test(hash.trim().replace(/^0x/i,''));
 }
 
 function validateTxHash(input) {
-  const val = input.value.trim();
+  const val  = input.value.trim();
   const hint = document.getElementById('txHint');
-  const submitBtn = document.getElementById('submitBtn');
-
-  if (val.length === 0) {
+  const clean = val.replace(/^0x/i,'');
+  if (!val) {
     input.className = 'proof-input';
     hint.className = 'input-hint hint-neutral';
-    hint.innerHTML = '<i class="fas fa-info-circle" style="font-size:.7rem"></i> Must be 64 hex characters (a–f, 0–9)';
+    hint.innerHTML = '<i class="fas fa-info-circle" style="font-size:.7rem"></i> 64-character hex — auto-filled if you used wallet above';
   } else if (validateTxHashValue(val)) {
     input.className = 'proof-input valid';
     hint.className = 'input-hint hint-ok';
@@ -1411,21 +1681,19 @@ function validateTxHash(input) {
   } else {
     input.className = 'proof-input invalid';
     hint.className = 'input-hint hint-err';
-    const clean = val.replace(/^0x/i,'');
-    if (clean.length < 64)
-      hint.innerHTML = `<i class="fas fa-times-circle" style="font-size:.7rem"></i> Too short: ${clean.length}/64 characters`;
-    else if (clean.length > 64)
-      hint.innerHTML = `<i class="fas fa-times-circle" style="font-size:.7rem"></i> Too long: ${clean.length}/64 characters`;
-    else
-      hint.innerHTML = '<i class="fas fa-times-circle" style="font-size:.7rem"></i> Invalid characters — must be 0–9, a–f only';
+    hint.innerHTML = `<i class="fas fa-times-circle" style="font-size:.7rem"></i> ${
+      clean.length < 64 ? `Too short: ${clean.length}/64 chars` :
+      clean.length > 64 ? `Too long: ${clean.length}/64 chars`  :
+      'Invalid characters — hex only (0–9, a–f)'
+    }`;
   }
   checkSubmitEnabled();
 }
 
 function validateTg(input) {
-  const val = input.value.trim();
+  const val  = input.value.trim();
   const hint = document.getElementById('tgHint');
-  if (val.length === 0) {
+  if (!val) {
     input.className = 'proof-input';
     hint.className = 'input-hint hint-neutral';
     hint.innerHTML = '<i class="fas fa-info-circle" style="font-size:.7rem"></i> Your Telegram for pass activation';
@@ -1433,6 +1701,8 @@ function validateTg(input) {
     input.className = 'proof-input valid';
     hint.className = 'input-hint hint-ok';
     hint.innerHTML = '<i class="fas fa-check-circle" style="font-size:.7rem"></i> Valid Telegram username';
+    // Update session tg if we have one
+    if (authSession) { authSession.tg = val.startsWith('@') ? val : '@' + val; localStorage.setItem('bb_auth', JSON.stringify(authSession)); }
   } else {
     input.className = 'proof-input invalid';
     hint.className = 'input-hint hint-err';
@@ -1444,29 +1714,30 @@ function validateTg(input) {
 function checkSubmitEnabled() {
   const tx = document.getElementById('txHashInput').value.trim();
   const tg = document.getElementById('tgUsernameInput').value.trim();
-  const ok = validateTxHashValue(tx) && /^@?[a-zA-Z0-9_]{4,32}$/.test(tg);
-  document.getElementById('submitBtn').disabled = !ok;
+  document.getElementById('submitBtn').disabled =
+    !(validateTxHashValue(tx) && /^@?[a-zA-Z0-9_]{4,32}$/.test(tg));
 }
 
-/* ── Submit Proof ── */
+/* ════════════════════════════════════════════════
+   STEP 4 — SUBMIT PROOF
+════════════════════════════════════════════════ */
 function submitProof() {
   const tx = document.getElementById('txHashInput').value.trim();
-  let tg = document.getElementById('tgUsernameInput').value.trim();
+  let   tg = document.getElementById('tgUsernameInput').value.trim();
   if (!tg.startsWith('@')) tg = '@' + tg;
+  if (!validateTxHashValue(tx)) { showToast('Invalid TX hash.', 'err'); return; }
 
-  if (!validateTxHashValue(tx)) { showToast('Invalid TX hash format.', 'err'); return; }
+  const cleanTx = tx.replace(/^0x/i,'').toLowerCase();
 
-  // Final checks
-  const cleanTx = tx.replace(/^0x/i, '').toLowerCase();
+  // Save session with tg now confirmed
+  const session = saveSession(connectedAddr || 'manual', tg);
 
-  // Persist locally
-  const record = { orderId, tg, tx: cleanTx, amount: AMOUNT_USDT, network: 'TRC-20', date: Date.now() };
+  const record = { orderId, tg, tx: cleanTx, address: connectedAddr, network:'TRC-20', date: Date.now(), sessionId: session.sessionId };
   localStorage.setItem('bb_pass_pending', JSON.stringify(record));
 
-  // Update success screen
-  document.getElementById('successTg').textContent = tg;
-  document.getElementById('successTx').textContent = cleanTx.slice(0,16) + '...' + cleanTx.slice(-8);
-  document.getElementById('successOrderId').textContent = orderId;
+  document.getElementById('successTg').textContent       = tg;
+  document.getElementById('successTx').textContent       = cleanTx.slice(0,16) + '...' + cleanTx.slice(-8);
+  document.getElementById('successOrderId').textContent  = orderId;
 
   showToast('Submitted! Verifying on TRONSCAN 🔴', 'ok');
   goStep(5);
@@ -1478,13 +1749,10 @@ function showToast(msg, type) {
   t.textContent = msg;
   t.className = 'bb-toast show ' + type;
   clearTimeout(t._timer);
-  t._timer = setTimeout(() => { t.className = 'bb-toast'; }, 3500);
+  t._timer = setTimeout(() => { t.className = 'bb-toast'; }, 3800);
 }
 
-/* ── ESC key ── */
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeCheckout();
-});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCheckout(); });
 </script>
 
 </body>
