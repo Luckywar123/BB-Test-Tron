@@ -4,16 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Belly Pass — Buy Section (Drop-in)</title>
-<!-- PASTE THIS IN YOUR <head> IF NOT ALREADY THERE -->
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lora:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
-/* ═══════════════════════════════════════════════════
-   BELLY PASS — ENHANCED BUY SECTION
-   Drop this <style> block into your existing CSS
-═══════════════════════════════════════════════════ */
 :root {
   --amber: #f59e0b;
   --amber-dark: #d97706;
@@ -38,7 +33,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, serif; }
 
-/* ── Section ── */
 .bp-section {
   background: var(--bg2);
   position: relative;
@@ -46,7 +40,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   padding: 100px 80px;
 }
 @media(max-width:768px){ .bp-section{ padding:60px 20px; } }
-
 .bp-section::before {
   content:'';
   position:absolute;
@@ -55,10 +48,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
               radial-gradient(ellipse at 80% 80%, rgba(255,6,10,.03) 0%, transparent 50%);
   pointer-events:none;
 }
-
 .bp-container { max-width:1200px; margin:0 auto; position:relative; z-index:1; }
-
-/* ── Head ── */
 .bp-head { text-align:center; margin-bottom:56px; }
 .bp-title {
   font-family:'Bebas Neue',sans-serif;
@@ -82,8 +72,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   color:#ff6666;
   margin-top:14px;
 }
-
-/* ── Grid ── */
 .bp-grid {
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -91,8 +79,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   align-items:start;
 }
 @media(max-width:900px){ .bp-grid{ grid-template-columns:1fr; } }
-
-/* ── Power cards ── */
 .power-cards { display:flex; flex-direction:column; gap:14px; }
 .power-card {
   background:var(--card);
@@ -118,8 +104,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   font-family:'DM Mono',monospace;
   font-size:.66rem;
 }
-
-/* ── Buy Card ── */
 .bp-buy-card {
   background:linear-gradient(160deg, var(--card), var(--card2));
   border:1px solid var(--border2);
@@ -137,7 +121,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   background:radial-gradient(circle, rgba(245,158,11,.1), transparent 70%);
   pointer-events:none;
 }
-
 .order-header {
   display:flex;
   align-items:center;
@@ -147,25 +130,12 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   border-bottom:1px solid var(--border);
 }
 .order-label { font-family:'DM Mono',monospace; font-size:.68rem; color:var(--muted); letter-spacing:2px; }
-.order-price {
-  display:flex;
-  align-items:baseline;
-  gap:6px;
-}
+.order-price { display:flex; align-items:baseline; gap:6px; }
 .order-price-num { font-family:'Bebas Neue',sans-serif; font-size:3rem; color:var(--amber); line-height:1; }
 .order-price-unit { font-family:'DM Mono',monospace; font-size:.85rem; color:var(--muted); }
-
 .order-items { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
-.order-item {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:.83rem;
-  color:var(--muted);
-}
+.order-item { display:flex; align-items:center; gap:8px; font-size:.83rem; color:var(--muted); }
 .order-item-check { color:var(--green); font-size:.9rem; }
-
-/* ── Buy button ── */
 .bp-buy-btn {
   width:100%;
   padding:15px;
@@ -184,27 +154,11 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   position:relative;
   overflow:hidden;
 }
-.bp-buy-btn::after {
-  content:'';
-  position:absolute;
-  inset:0;
-  background:rgba(255,255,255,.08);
-  opacity:0;
-  transition:opacity .2s;
-}
+.bp-buy-btn::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,.08); opacity:0; transition:opacity .2s; }
 .bp-buy-btn:hover::after { opacity:1; }
 .bp-buy-btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(255,6,10,.3); }
-
 .bp-footnote { font-size:.72rem; color:var(--muted2); text-align:center; margin-top:10px; }
-
-/* ── Security badges ── */
-.security-strip {
-  display:flex;
-  gap:8px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-top:16px;
-}
+.security-strip { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:16px; }
 .sec-badge {
   display:inline-flex;
   align-items:center;
@@ -217,9 +171,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   border-radius:20px;
 }
 
-/* ════════════════════════════════════════════════
-   CHECKOUT MODAL
-════════════════════════════════════════════════ */
+/* ── CHECKOUT MODAL ── */
 .checkout-backdrop {
   position:fixed;
   inset:0;
@@ -234,10 +186,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   pointer-events:none;
   transition:opacity .3s;
 }
-.checkout-backdrop.open {
-  opacity:1;
-  pointer-events:all;
-}
+.checkout-backdrop.open { opacity:1; pointer-events:all; }
 .checkout-modal {
   background:var(--bg2);
   border:1px solid var(--border2);
@@ -250,14 +199,10 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   transform:translateY(20px) scale(.97);
   transition:transform .3s;
 }
-.checkout-backdrop.open .checkout-modal {
-  transform:none;
-}
+.checkout-backdrop.open .checkout-modal { transform:none; }
 .checkout-modal::-webkit-scrollbar { width:3px; }
 .checkout-modal::-webkit-scrollbar-track { background:transparent; }
 .checkout-modal::-webkit-scrollbar-thumb { background:var(--amber-dark); border-radius:2px; }
-
-/* ── Modal header ── */
 .modal-topbar {
   display:flex;
   align-items:center;
@@ -266,38 +211,24 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
 }
 .modal-topbar-title { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:1px; }
 .modal-close-btn {
-  width:32px;
-  height:32px;
+  width:32px; height:32px;
   border-radius:50%;
   background:rgba(255,255,255,.06);
   border:1px solid var(--border);
   color:var(--muted);
   cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex; align-items:center; justify-content:center;
   font-size:.85rem;
   transition:all .2s;
 }
 .modal-close-btn:hover { color:var(--text); background:rgba(255,255,255,.1); }
-
-/* ── Step progress ── */
-.step-progress {
-  display:flex;
-  align-items:center;
-  padding:16px 28px;
-  gap:0;
-}
+.step-progress { display:flex; align-items:center; padding:16px 28px; gap:0; }
 .step-node {
-  width:28px;
-  height:28px;
+  width:28px; height:28px;
   border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex; align-items:center; justify-content:center;
   font-family:'DM Mono',monospace;
-  font-size:.72rem;
-  font-weight:500;
+  font-size:.72rem; font-weight:500;
   flex-shrink:0;
   transition:all .3s;
 }
@@ -307,11 +238,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
 .step-line { flex:1; height:1px; background:var(--border); margin:0 4px; }
 .step-line.done { background:var(--green); }
 .step-line.active { background:linear-gradient(90deg, var(--green), var(--border)); }
-
-/* ── Modal body ── */
 .modal-body { padding:0 28px 28px; }
-
-/* Step 1: Order Review */
 .order-review-card {
   background:var(--card);
   border:1px solid var(--border);
@@ -320,11 +247,8 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   margin-bottom:18px;
 }
 .or-header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:14px;
-  padding-bottom:14px;
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:14px; padding-bottom:14px;
   border-bottom:1px solid var(--border);
 }
 .or-product { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:1px; }
@@ -338,12 +262,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   font-size:.68rem;
 }
 .or-items { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
-.or-item {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:.83rem;
-}
+.or-item { display:flex; align-items:center; gap:10px; font-size:.83rem; }
 .or-item-icon { font-size:1.1rem; width:22px; text-align:center; }
 .or-item-text { flex:1; color:var(--muted); }
 .or-item-badge {
@@ -355,32 +274,24 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   border-radius:4px;
 }
 .or-total {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  display:flex; align-items:center; justify-content:space-between;
   padding-top:14px;
   border-top:1px solid var(--border);
 }
 .or-total-label { font-family:'DM Mono',monospace; font-size:.78rem; color:var(--muted); }
 .or-total-price { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--usdt); }
 .or-total-net { font-family:'DM Mono',monospace; font-size:.72rem; color:var(--muted); }
-
-/* ── Network info ── */
 .network-info {
   background:rgba(38,161,123,.06);
   border:1px solid rgba(38,161,123,.2);
   border-radius:12px;
   padding:14px 16px;
-  display:flex;
-  align-items:center;
-  gap:12px;
+  display:flex; align-items:center; gap:12px;
   margin-bottom:18px;
 }
 .net-icon { font-size:1.3rem; }
 .net-label { font-family:'DM Mono',monospace; font-size:.8rem; color:var(--usdt); font-weight:500; }
 .net-sub { font-size:.72rem; color:var(--muted); }
-
-/* ── Bitget connect ── */
 .bitget-btn {
   width:100%;
   padding:13px;
@@ -391,74 +302,140 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   font-family:'DM Mono',monospace;
   font-size:.85rem;
   cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
+  display:flex; align-items:center; justify-content:center; gap:10px;
   transition:all .2s;
   margin-bottom:10px;
 }
 .bitget-btn:hover { background:rgba(0,192,192,.18); border-color:rgba(0,192,192,.5); }
 .bitget-btn.connected { background:rgba(16,185,129,.08); border-color:rgba(16,185,129,.3); color:var(--green); }
-
-.wallet-separator {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin:10px 0;
-}
+.wallet-separator { display:flex; align-items:center; gap:12px; margin:10px 0; }
 .ws-line { flex:1; height:1px; background:var(--border); }
 .ws-text { font-family:'DM Mono',monospace; font-size:.68rem; color:var(--muted2); }
 
-/* Step 3: Payment */
-.pay-address-box {
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:18px;
-  margin-bottom:14px;
+/* Pay3 card */
+.pay3-shell { display:flex; flex-direction:column; align-items:center; }
+.pay3-card {
+  width:100%;
+  background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);
+  border:1px solid rgba(245,158,11,.2);
+  border-radius:20px;
+  padding:32px 28px 28px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 0 60px rgba(245,158,11,.05), inset 0 1px 0 rgba(255,255,255,.05);
 }
-.pay-addr-label {
-  font-family:'DM Mono',monospace;
-  font-size:.66rem;
-  color:var(--muted2);
-  letter-spacing:1.5px;
-  margin-bottom:8px;
-  display:flex;
-  align-items:center;
-  gap:6px;
+.pay3-close {
+  position:absolute; top:14px; right:14px;
+  width:28px; height:28px;
+  border-radius:50%;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.4);
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.75rem;
+  transition:all .2s;
 }
-.pay-addr-lock { color:var(--amber); font-size:.8rem; }
-.pay-addr-text {
-  font-family:'DM Mono',monospace;
-  font-size:.8rem;
+.pay3-close:hover { color:#fff; background:rgba(255,255,255,.12); }
+.pay3-label {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.05rem;
+  letter-spacing:3px;
+  color:rgba(255,255,255,.55);
+  margin-bottom:18px;
+}
+.pay3-amount { display:flex; align-items:baseline; justify-content:center; gap:8px; margin-bottom:10px; }
+.pay3-num {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:4.5rem;
+  line-height:1;
   color:var(--amber);
-  word-break:break-all;
-  line-height:1.6;
+  text-shadow:0 0 40px rgba(245,158,11,.4);
+}
+.pay3-unit { font-family:'DM Mono',monospace; font-size:1.1rem; color:rgba(245,158,11,.7); }
+.pay3-meta {
+  font-family:'DM Mono',monospace;
+  font-size:.72rem;
+  color:rgba(255,255,255,.38);
+  margin-bottom:28px;
   letter-spacing:.3px;
-  padding:10px 12px;
-  background:rgba(245,158,11,.04);
-  border-radius:8px;
-  border:1px solid rgba(245,158,11,.1);
-  user-select:all;
-  cursor:text;
 }
-.pay-addr-chunks {
-  display:flex;
-  flex-wrap:wrap;
-  gap:2px;
-  padding:10px 12px;
-  background:rgba(245,158,11,.04);
-  border-radius:8px;
-  border:1px solid rgba(245,158,11,.1);
-}
-.addr-chunk {
+.pay3-connect-btn {
+  width:100%;
+  padding:15px;
+  background:linear-gradient(135deg,var(--amber),var(--amber-dark));
+  color:#0a0805;
+  border:none;
+  border-radius:14px;
   font-family:'DM Mono',monospace;
-  font-size:.78rem;
-  color:var(--amber);
+  font-size:.88rem;
+  font-weight:500;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  transition:all .25s;
+  letter-spacing:.5px;
 }
-.addr-chunk:nth-child(odd) { opacity:.7; }
-
+.pay3-connect-btn:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(245,158,11,.35); }
+.pay3-waiting-btn {
+  width:100%;
+  padding:15px;
+  background:linear-gradient(270deg,#c47a00,#f59e0b,#e07a00,#f59e0b);
+  background-size:300% 100%;
+  animation:shimmer 2s linear infinite;
+  color:#0a0805;
+  border:none;
+  border-radius:14px;
+  font-family:'DM Mono',monospace;
+  font-size:.88rem;
+  font-weight:500;
+  cursor:not-allowed;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  letter-spacing:.5px;
+}
+@keyframes shimmer { 0%{ background-position:0% 50%; } 100%{ background-position:300% 50%; } }
+.pay3-spinner {
+  width:14px; height:14px;
+  border:2px solid rgba(10,8,5,.3);
+  border-top-color:#0a0805;
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+  flex-shrink:0;
+}
+@keyframes spin { to{ transform:rotate(360deg); } }
+.pay3-wallet-info {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  font-family:'DM Mono',monospace;
+  font-size:.76rem;
+  color:rgba(255,255,255,.5);
+  margin-bottom:14px;
+  padding:10px 14px;
+  background:rgba(16,185,129,.08);
+  border:1px solid rgba(16,185,129,.2);
+  border-radius:10px;
+}
+.pay3-send-btn {
+  width:100%;
+  padding:15px;
+  background:linear-gradient(135deg,#26a17b,#1a7a5e);
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  font-family:'DM Mono',monospace;
+  font-size:.88rem;
+  font-weight:500;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  transition:all .25s;
+  letter-spacing:.5px;
+}
+.pay3-send-btn:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(38,161,123,.3); }
+.pay3-foot {
+  font-family:'DM Mono',monospace;
+  font-size:.68rem;
+  color:rgba(255,255,255,.25);
+  margin-top:14px;
+  letter-spacing:.3px;
+}
 .copy-addr-btn {
   width:100%;
   margin-top:10px;
@@ -470,59 +447,13 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   font-family:'DM Mono',monospace;
   font-size:.78rem;
   cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
+  display:flex; align-items:center; justify-content:center; gap:8px;
   transition:all .2s;
 }
 .copy-addr-btn:hover { background:rgba(245,158,11,.08); }
 .copy-addr-btn.copied { color:var(--green); border-color:rgba(16,185,129,.3); }
 
-/* QR code */
-.qr-wrap {
-  display:flex;
-  justify-content:center;
-  margin-bottom:14px;
-}
-.qr-inner {
-  padding:12px;
-  background:#fff;
-  border-radius:12px;
-  display:inline-block;
-}
-
-/* Amount box */
-.amount-confirm-box {
-  background:rgba(38,161,123,.08);
-  border:1px solid rgba(38,161,123,.25);
-  border-radius:12px;
-  padding:14px 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:14px;
-}
-.acb-label { font-family:'DM Mono',monospace; font-size:.78rem; color:var(--muted); }
-.acb-amount { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--usdt); }
-.acb-network { font-family:'DM Mono',monospace; font-size:.65rem; color:var(--muted2); }
-
-/* Warning */
-.net-warning {
-  background:rgba(239,68,68,.06);
-  border:1px solid rgba(239,68,68,.2);
-  border-radius:10px;
-  padding:12px 14px;
-  margin-bottom:16px;
-}
-.net-warning p {
-  font-family:'DM Mono',monospace;
-  font-size:.73rem;
-  color:#ff7777;
-  line-height:1.6;
-}
-
-/* Step 4: Submit proof */
+/* Proof step */
 .proof-label {
   font-family:'DM Mono',monospace;
   font-size:.74rem;
@@ -552,15 +483,11 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   font-family:'DM Mono',monospace;
   font-size:.66rem;
   margin-bottom:14px;
-  display:flex;
-  align-items:center;
-  gap:5px;
+  display:flex; align-items:center; gap:5px;
 }
 .hint-ok { color:var(--green); }
 .hint-err { color:#ef4444; }
 .hint-neutral { color:var(--muted2); }
-
-/* ── Action buttons ── */
 .modal-btn {
   width:100%;
   padding:14px;
@@ -569,53 +496,29 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   font-family:'DM Mono',monospace;
   font-size:.86rem;
   cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
+  display:flex; align-items:center; justify-content:center; gap:10px;
   transition:all .2s;
 }
-.modal-btn-primary {
-  background:linear-gradient(135deg, var(--amber), var(--amber-dark));
-  color:#0a0805;
-}
+.modal-btn-primary { background:linear-gradient(135deg, var(--amber), var(--amber-dark)); color:#0a0805; }
 .modal-btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(245,158,11,.3); }
-.modal-btn-tron {
-  background:linear-gradient(135deg, #ff060a, #8b0000);
-  color:#fff;
-}
+.modal-btn-tron { background:linear-gradient(135deg, #ff060a, #8b0000); color:#fff; }
 .modal-btn-tron:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(255,6,10,.3); }
-.modal-btn-outline {
-  background:transparent;
-  border:1px solid var(--border);
-  color:var(--muted);
-}
+.modal-btn-outline { background:transparent; border:1px solid var(--border); color:var(--muted); }
 .modal-btn-outline:hover { border-color:var(--border2); color:var(--text); }
 .modal-btn:disabled { opacity:.5; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
 
-/* ── Success ── */
-.success-wrap {
-  text-align:center;
-  padding:16px 0;
-}
+/* Success */
+.success-wrap { text-align:center; padding:16px 0; }
 .success-icon {
-  width:72px;
-  height:72px;
+  width:72px; height:72px;
   border-radius:50%;
   background:rgba(16,185,129,.12);
   border:2px solid rgba(16,185,129,.3);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex; align-items:center; justify-content:center;
   font-size:2rem;
   margin:0 auto 20px;
 }
-.success-title {
-  font-family:'Bebas Neue',sans-serif;
-  font-size:2rem;
-  letter-spacing:1px;
-  margin-bottom:8px;
-}
+.success-title { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:1px; margin-bottom:8px; }
 .success-desc { font-size:.88rem; color:var(--muted); line-height:1.7; margin-bottom:20px; }
 .success-detail {
   background:var(--card);
@@ -626,9 +529,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   margin-bottom:20px;
 }
 .sd-row {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  display:flex; align-items:center; justify-content:space-between;
   padding:6px 0;
   font-family:'DM Mono',monospace;
   font-size:.76rem;
@@ -637,7 +538,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
 .sd-key { color:var(--muted); }
 .sd-val { color:var(--text); }
 .sd-val.green { color:var(--green); }
-
 .tg-btn {
   width:100%;
   padding:13px;
@@ -648,195 +548,16 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
   font-family:'DM Mono',monospace;
   font-size:.86rem;
   cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
+  display:flex; align-items:center; justify-content:center; gap:10px;
   text-decoration:none;
   transition:all .2s;
 }
 .tg-btn:hover { opacity:.88; }
 
-/* ── Step 3: Web3 Payment Card ── */
-.pay3-shell {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-.pay3-card {
-  width:100%;
-  background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);
-  border:1px solid rgba(245,158,11,.2);
-  border-radius:20px;
-  padding:32px 28px 28px;
-  text-align:center;
-  position:relative;
-  box-shadow:0 0 60px rgba(245,158,11,.05), inset 0 1px 0 rgba(255,255,255,.05);
-}
-.pay3-close {
-  position:absolute;
-  top:14px;
-  right:14px;
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.1);
-  color:rgba(255,255,255,.4);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:.75rem;
-  transition:all .2s;
-}
-.pay3-close:hover { color:#fff; background:rgba(255,255,255,.12); }
-.pay3-label {
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.05rem;
-  letter-spacing:3px;
-  color:rgba(255,255,255,.55);
-  margin-bottom:18px;
-}
-.pay3-amount {
-  display:flex;
-  align-items:baseline;
-  justify-content:center;
-  gap:8px;
-  margin-bottom:10px;
-}
-.pay3-num {
-  font-family:'Bebas Neue',sans-serif;
-  font-size:4.5rem;
-  line-height:1;
-  color:var(--amber);
-  text-shadow:0 0 40px rgba(245,158,11,.4);
-}
-.pay3-unit {
-  font-family:'DM Mono',monospace;
-  font-size:1.1rem;
-  color:rgba(245,158,11,.7);
-}
-.pay3-meta {
-  font-family:'DM Mono',monospace;
-  font-size:.72rem;
-  color:rgba(255,255,255,.38);
-  margin-bottom:28px;
-  letter-spacing:.3px;
-}
-
-/* Connect button */
-.pay3-connect-btn {
-  width:100%;
-  padding:15px;
-  background:linear-gradient(135deg,var(--amber),var(--amber-dark));
-  color:#0a0805;
-  border:none;
-  border-radius:14px;
-  font-family:'DM Mono',monospace;
-  font-size:.88rem;
-  font-weight:500;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  transition:all .25s;
-  letter-spacing:.5px;
-}
-.pay3-connect-btn:hover {
-  transform:translateY(-2px);
-  box-shadow:0 10px 32px rgba(245,158,11,.35);
-}
-
-/* Waiting button — shimmer */
-.pay3-waiting-btn {
-  width:100%;
-  padding:15px;
-  background:linear-gradient(270deg,#c47a00,#f59e0b,#e07a00,#f59e0b);
-  background-size:300% 100%;
-  animation:shimmer 2s linear infinite;
-  color:#0a0805;
-  border:none;
-  border-radius:14px;
-  font-family:'DM Mono',monospace;
-  font-size:.88rem;
-  font-weight:500;
-  cursor:not-allowed;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  letter-spacing:.5px;
-}
-@keyframes shimmer {
-  0%   { background-position:0% 50%; }
-  100% { background-position:300% 50%; }
-}
-.pay3-spinner {
-  width:14px;
-  height:14px;
-  border:2px solid rgba(10,8,5,.3);
-  border-top-color:#0a0805;
-  border-radius:50%;
-  animation:spin 0.8s linear infinite;
-  flex-shrink:0;
-}
-@keyframes spin { to { transform:rotate(360deg); } }
-
-/* Wallet info row */
-.pay3-wallet-info {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  font-family:'DM Mono',monospace;
-  font-size:.76rem;
-  color:rgba(255,255,255,.5);
-  margin-bottom:14px;
-  padding:10px 14px;
-  background:rgba(16,185,129,.08);
-  border:1px solid rgba(16,185,129,.2);
-  border-radius:10px;
-}
-
-/* Send button */
-.pay3-send-btn {
-  width:100%;
-  padding:15px;
-  background:linear-gradient(135deg,#26a17b,#1a7a5e);
-  color:#fff;
-  border:none;
-  border-radius:14px;
-  font-family:'DM Mono',monospace;
-  font-size:.88rem;
-  font-weight:500;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  transition:all .25s;
-  letter-spacing:.5px;
-}
-.pay3-send-btn:hover {
-  transform:translateY(-2px);
-  box-shadow:0 10px 32px rgba(38,161,123,.3);
-}
-
-.pay3-foot {
-  font-family:'DM Mono',monospace;
-  font-size:.68rem;
-  color:rgba(255,255,255,.25);
-  margin-top:14px;
-  letter-spacing:.3px;
-}
-
-/* ── Toast ── */
+/* Toast */
 .bb-toast {
   position:fixed;
-  bottom:24px;
-  right:24px;
+  bottom:24px; right:24px;
   padding:12px 18px;
   border-radius:12px;
   font-family:'DM Mono',monospace;
@@ -856,13 +577,8 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════════
-     BELLY PASS SECTION
-     Replace your existing #bellypass section with this
-══════════════════════════════════════════════════════ -->
 <section id="bellypass" class="bp-section">
   <div class="bp-container">
-
     <div class="bp-head">
       <h2 class="bp-title">Belly <em>Pass</em></h2>
       <p class="bp-subtitle">3 days of pure power. Dominate every run.</p>
@@ -873,7 +589,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
     </div>
 
     <div class="bp-grid">
-      <!-- Power-ups -->
       <div class="power-cards">
         <div class="power-card">
           <div class="power-icon">⚡</div>
@@ -899,32 +614,20 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
             <div class="power-tag">1 Min Activation</div>
           </div>
         </div>
-
-        <!-- Security trust strip -->
         <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-top:4px">
           <div style="font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted2);letter-spacing:1px;margin-bottom:12px">PAYMENT SECURITY</div>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)">
-              <i class="fas fa-shield-alt" style="color:var(--green);width:16px"></i> TRC-20 only — no wrong network risk
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)">
-              <i class="fas fa-fingerprint" style="color:var(--amber);width:16px"></i> TX hash verified on TRONSCAN
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)">
-              <i class="fas fa-link" style="color:var(--bitget);width:16px"></i> Bitget Wallet supported
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)">
-              <i class="fas fa-bolt" style="color:var(--amber);width:16px"></i> Activation within minutes
-            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)"><i class="fas fa-shield-alt" style="color:var(--green);width:16px"></i> TRC-20 only — no wrong network risk</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)"><i class="fas fa-fingerprint" style="color:var(--amber);width:16px"></i> TX hash verified on TRONSCAN</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)"><i class="fas fa-link" style="color:var(--bitget);width:16px"></i> Bitget Wallet supported</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)"><i class="fas fa-bolt" style="color:var(--amber);width:16px"></i> Activation within minutes</div>
           </div>
         </div>
       </div>
 
-      <!-- Buy Card -->
       <div>
         <div class="bp-buy-card">
           <div class="bp-card-glow"></div>
-
           <div class="order-header">
             <div>
               <div class="order-label">3 DAYS PASS · ALL POWER-UPS</div>
@@ -935,7 +638,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
               <span class="order-price-unit">USDT</span>
             </div>
           </div>
-
           <div class="order-items">
             <div class="order-item"><span class="order-item-check">✅</span> Combo Master — always active</div>
             <div class="order-item"><span class="order-item-check">✅</span> Shield ×3 per run</div>
@@ -943,7 +645,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
             <div class="order-item"><span class="order-item-check">✅</span> Linked to Telegram username</div>
             <div class="order-item"><span class="order-item-check">✅</span> Instant in-game activation</div>
           </div>
-
           <div style="background:rgba(38,161,123,.07);border:1px solid rgba(38,161,123,.2);border-radius:10px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
             <div style="font-family:'DM Mono',monospace;font-size:.75rem;color:var(--muted)">
               <span style="display:block;color:var(--usdt);font-size:.85rem;font-weight:500">USDT TRC-20</span>
@@ -951,15 +652,12 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
             </div>
             <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--usdt)">2 USDT</div>
           </div>
-
           <button class="bp-buy-btn" onclick="openCheckout()">
             <i class="fas fa-circle" style="font-size:.5rem;color:#ff6666"></i>
             Buy Now — 2 USDT via TRON
             <i class="fas fa-arrow-right"></i>
           </button>
-
           <p class="bp-footnote">Checkout secured · TX hash verification required</p>
-
           <div class="security-strip">
             <div class="sec-badge"><i class="fas fa-lock" style="font-size:.6rem"></i> Secure</div>
             <div class="sec-badge"><i class="fas fa-check-circle" style="font-size:.6rem;color:var(--green)"></i> TRC-20 Verified</div>
@@ -972,18 +670,13 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
 </section>
 
 
-<!-- ══════════════════════════════════════════════════════
-     CHECKOUT MODAL
-══════════════════════════════════════════════════════ -->
+<!-- CHECKOUT MODAL -->
 <div id="checkoutBackdrop" class="checkout-backdrop" onclick="handleBackdropClick(event)">
   <div class="checkout-modal" onclick="event.stopPropagation()">
-
     <div class="modal-topbar">
       <span class="modal-topbar-title" id="modalTitle">Checkout</span>
       <button class="modal-close-btn" onclick="closeCheckout()">✕</button>
     </div>
-
-    <!-- Step progress -->
     <div class="step-progress" id="stepProgress">
       <div class="step-node active" id="sn1">1</div>
       <div class="step-line" id="sl1"></div>
@@ -996,7 +689,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
 
     <div class="modal-body">
 
-      <!-- ─ STEP 1: Review ─ -->
+      <!-- STEP 1: Review -->
       <div id="step1">
         <div class="order-review-card">
           <div class="or-header">
@@ -1016,31 +709,27 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
             <div class="or-total-price">2 USDT</div>
           </div>
         </div>
-
         <div class="network-info">
           <span class="net-icon">🔴</span>
           <div>
             <div class="net-label">TRON Network · TRC-20</div>
-            <div class="net-sub">Send USDT on TRON only — fast & low fee</div>
+            <div class="net-sub">Send USDT on TRON only — fast &amp; low fee</div>
           </div>
         </div>
-
         <div style="font-family:'DM Mono',monospace;font-size:.73rem;color:var(--muted);margin-bottom:16px;line-height:1.6">
           Order ID: <span id="orderId" style="color:var(--amber)">#BP-XXXXXX</span>
         </div>
-
         <button class="modal-btn modal-btn-primary" onclick="goStep(2)">
           Continue to Payment <i class="fas fa-arrow-right"></i>
         </button>
       </div>
 
-      <!-- ─ STEP 2: Connect Wallet ─ -->
+      <!-- STEP 2: Connect Wallet -->
       <div id="step2" style="display:none">
         <div style="text-align:center;margin-bottom:20px">
           <div style="font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted);letter-spacing:1px">CONNECT WALLET (OPTIONAL)</div>
           <p style="font-size:.83rem;color:var(--muted);margin-top:6px;line-height:1.6">Connect Bitget Wallet to auto-fill payment details, or skip to pay manually.</p>
         </div>
-
         <button class="bitget-btn" id="bitgetBtn" onclick="connectBitget()">
           <i class="fas fa-wallet"></i>
           <div style="text-align:left">
@@ -1048,37 +737,31 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
             <div style="font-size:.66rem;opacity:.7">Supports TRON TRC-20 · USDT</div>
           </div>
         </button>
-
         <div id="bitgetStatus" style="display:none;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:10px;padding:12px 14px;margin-bottom:14px">
           <div style="font-family:'DM Mono',monospace;font-size:.76rem;color:var(--green)" id="bitgetAddr">Connected: ...</div>
           <div style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--muted);margin-top:4px">TRON address verified</div>
         </div>
-
         <div class="wallet-separator">
           <div class="ws-line"></div>
-          <span class="ws-text">or skip & pay manually</span>
+          <span class="ws-text">or skip &amp; pay manually</span>
           <div class="ws-line"></div>
         </div>
-
         <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:18px">
           <div style="font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted);margin-bottom:6px">DEEPLINK (Mobile)</div>
           <a href="https://bitkeep.com/en/wallet" target="_blank" style="color:var(--bitget);font-family:'DM Mono',monospace;font-size:.76rem;text-decoration:none">
             <i class="fas fa-external-link-alt" style="font-size:.65rem"></i> Open Bitget App →
           </a>
         </div>
-
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
           <button class="modal-btn modal-btn-outline" onclick="goStep(1)">← Back</button>
           <button class="modal-btn modal-btn-tron" onclick="goStep(3)">Proceed to Pay →</button>
         </div>
       </div>
 
-      <!-- ─ STEP 3: Pay — Smart Wallet Flow ─ -->
+      <!-- STEP 3: Pay -->
       <div id="step3" style="display:none">
         <div class="pay3-shell">
-
-          <!-- Auth ribbon (returning user) -->
-          <div id="pay3AuthRibbon" style="display:none;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:10px 14px;margin-bottom:12px;display:none;align-items:center;gap:10px;width:100%">
+          <div id="pay3AuthRibbon" style="display:none;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:10px 14px;margin-bottom:12px;align-items:center;gap:10px;width:100%">
             <i class="fas fa-shield-alt" style="color:var(--green);font-size:.9rem"></i>
             <div style="flex:1">
               <div style="font-family:'DM Mono',monospace;font-size:.72rem;color:var(--green)">Authorized wallet</div>
@@ -1087,7 +770,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
             <button onclick="clearSession()" style="background:none;border:none;color:var(--muted2);font-size:.65rem;cursor:pointer;font-family:'DM Mono',monospace">Change</button>
           </div>
 
-          <!-- Payment Card -->
           <div class="pay3-card">
             <div class="pay3-close" onclick="closeCheckout()">✕</div>
             <div class="pay3-label">PURCHASE BELLY PASS</div>
@@ -1097,23 +779,21 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
             </div>
             <div class="pay3-meta">Valid 3 days &nbsp;·&nbsp; All power-ups &nbsp;·&nbsp; TRON TRC-20</div>
 
-            <!-- STATE: detecting -->
+            <!-- detecting -->
             <div id="p3Detecting">
-              <button class="pay3-waiting-btn" disabled style="background:rgba(255,255,255,.06);color:rgba(255,255,255,.4)">
+              <button class="pay3-waiting-btn" disabled style="background:rgba(255,255,255,.06);color:rgba(255,255,255,.4);animation:none">
                 <span class="pay3-spinner" style="border-color:rgba(255,255,255,.2);border-top-color:rgba(255,255,255,.5)"></span>
                 Detecting wallet...
               </button>
             </div>
 
-            <!-- STATE: no wallet / regular mobile browser -->
+            <!-- no wallet -->
             <div id="p3NoWallet" style="display:none">
               <div style="margin-bottom:12px">
-                <!-- Bitget deep link -->
                 <a id="bitgetDeepLink" href="#" class="pay3-connect-btn" style="display:flex;text-decoration:none;margin-bottom:10px" onclick="openBitgetDeepLink(event)">
                   <i class="fas fa-mobile-alt"></i>
                   Open in Bitget Wallet App
                 </a>
-                <!-- TronLink deep link -->
                 <a id="tronlinkDeepLink" href="#" onclick="openTronLinkDeepLink(event)"
                   style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;background:rgba(255,6,10,.1);border:1px solid rgba(255,6,10,.3);color:#ff7777;border-radius:12px;font-family:'DM Mono',monospace;font-size:.82rem;text-decoration:none;transition:all .2s">
                   <i class="fas fa-link"></i>
@@ -1128,7 +808,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
               </button>
             </div>
 
-            <!-- STATE: wallet detected, not connected -->
+            <!-- idle (wallet detected, not connected) -->
             <div id="p3Idle" style="display:none">
               <button class="pay3-connect-btn" onclick="triggerWalletConnect()">
                 <i class="fas fa-wallet"></i>
@@ -1136,7 +816,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
               </button>
             </div>
 
-            <!-- STATE: waiting / connecting -->
+            <!-- waiting -->
             <div id="p3Waiting" style="display:none">
               <button class="pay3-waiting-btn" disabled>
                 <span class="pay3-spinner"></span>
@@ -1144,7 +824,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
               </button>
             </div>
 
-            <!-- STATE: connected, ready to send tx -->
+            <!-- ready -->
             <div id="p3Ready" style="display:none">
               <div class="pay3-wallet-info">
                 <i class="fas fa-check-circle" style="color:var(--green)"></i>
@@ -1156,7 +836,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
               </button>
             </div>
 
-            <!-- STATE: tx broadcasting -->
+            <!-- sending -->
             <div id="p3Sending" style="display:none">
               <button class="pay3-waiting-btn" disabled style="background:linear-gradient(270deg,#1a7a5e,#26a17b,#1a7a5e);background-size:300% 100%;animation:shimmer 1.5s linear infinite">
                 <span class="pay3-spinner" style="border-color:rgba(255,255,255,.3);border-top-color:#fff"></span>
@@ -1164,7 +844,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
               </button>
             </div>
 
-            <!-- STATE: tx success — show hash -->
+            <!-- tx done -->
             <div id="p3TxDone" style="display:none">
               <div style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);border-radius:12px;padding:14px;margin-bottom:12px;text-align:left">
                 <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--green);letter-spacing:1px;margin-bottom:6px">✓ TRANSACTION CONFIRMED</div>
@@ -1176,7 +856,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
               </button>
             </div>
 
-            <!-- STATE: manual copy address -->
+            <!-- manual -->
             <div id="p3Manual" style="display:none">
               <div style="background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.15);border-radius:10px;padding:12px 14px;margin-bottom:10px">
                 <div style="font-family:'DM Mono',monospace;font-size:.64rem;color:var(--muted2);letter-spacing:1.2px;margin-bottom:6px">SEND TO ADDRESS</div>
@@ -1201,9 +881,8 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
         </div>
       </div>
 
-      <!-- ─ STEP 4: Submit Proof ─ -->
+      <!-- STEP 4: Submit Proof -->
       <div id="step4" style="display:none">
-
         <div style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);border-radius:12px;padding:14px 16px;margin-bottom:20px">
           <div style="font-family:'DM Mono',monospace;font-size:.72rem;color:var(--amber);margin-bottom:4px">HOW TO FIND YOUR TX HASH</div>
           <p style="font-size:.78rem;color:var(--muted);line-height:1.6">
@@ -1211,7 +890,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
             Or check <a href="https://tronscan.org" target="_blank" style="color:var(--amber)">TRONSCAN.org</a> and search by your address.
           </p>
         </div>
-
         <label class="proof-label">Transaction Hash (TX ID) — TRON</label>
         <input class="proof-input" id="txHashInput" type="text"
           placeholder="64-character TRON transaction hash..."
@@ -1220,7 +898,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
           <i class="fas fa-info-circle" style="font-size:.7rem"></i>
           Must be 64 hex characters (a–f, 0–9)
         </div>
-
         <label class="proof-label">Your Telegram Username</label>
         <input class="proof-input" id="tgUsernameInput" type="text"
           placeholder="@yourusername"
@@ -1229,7 +906,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
           <i class="fas fa-info-circle" style="font-size:.7rem"></i>
           Your Telegram for pass activation
         </div>
-
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">
           <button class="modal-btn modal-btn-outline" onclick="goStep(3)">← Back</button>
           <button class="modal-btn modal-btn-tron" id="submitBtn" onclick="submitProof()" disabled>
@@ -1242,7 +918,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
         </p>
       </div>
 
-      <!-- ─ STEP 5: Success ─ -->
+      <!-- STEP 5: Success -->
       <div id="step5" style="display:none">
         <div class="success-wrap">
           <div class="success-icon">✅</div>
@@ -1252,42 +928,24 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
             Your Belly Pass will activate within minutes.
           </p>
           <div class="success-detail">
-            <div class="sd-row">
-              <span class="sd-key">Order ID</span>
-              <span class="sd-val" id="successOrderId">#BP-XXXXXX</span>
-            </div>
-            <div class="sd-row">
-              <span class="sd-key">Telegram</span>
-              <span class="sd-val green" id="successTg">@username</span>
-            </div>
-            <div class="sd-row">
-              <span class="sd-key">TX Hash</span>
-              <span class="sd-val" id="successTx" style="font-size:.7rem">...</span>
-            </div>
-            <div class="sd-row">
-              <span class="sd-key">Amount</span>
-              <span class="sd-val green">2 USDT TRC-20</span>
-            </div>
-            <div class="sd-row">
-              <span class="sd-key">Status</span>
-              <span class="sd-val green">⏳ Verifying on TRONSCAN</span>
-            </div>
+            <div class="sd-row"><span class="sd-key">Order ID</span><span class="sd-val" id="successOrderId">#BP-XXXXXX</span></div>
+            <div class="sd-row"><span class="sd-key">Telegram</span><span class="sd-val green" id="successTg">@username</span></div>
+            <div class="sd-row"><span class="sd-key">TX Hash</span><span class="sd-val" id="successTx" style="font-size:.7rem">...</span></div>
+            <div class="sd-row"><span class="sd-key">Amount</span><span class="sd-val green">2 USDT TRC-20</span></div>
+            <div class="sd-row"><span class="sd-key">Status</span><span class="sd-val green">⏳ Verifying on TRONSCAN</span></div>
           </div>
           <a href="https://t.me/bellybears_bot" target="_blank" class="tg-btn">
             <i class="fab fa-telegram" style="font-size:1.2rem"></i>
             Open Telegram Game
           </a>
-          <button class="modal-btn modal-btn-outline" onclick="closeCheckout()" style="margin-top:10px">
-            Close
-          </button>
+          <button class="modal-btn modal-btn-outline" onclick="closeCheckout()" style="margin-top:10px">Close</button>
         </div>
       </div>
 
-    </div><!-- /modal-body -->
+    </div>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="bb-toast" id="bbToast"></div>
 
 
@@ -1295,22 +953,21 @@ body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, 
 /* ══════════════════════════════════════════════════
    CONFIG
 ══════════════════════════════════════════════════ */
-const TRON_ADDRESS   = 'TAipDFyZhtUrnAD43kH7Ty5ni1VX3qtLQQ'; // ← ganti dgn alamat asli
-const USDT_CONTRACT  = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t';   // USDT TRC-20 mainnet
-const AMOUNT_SUN     = 2_000_000;   // 2 USDT × 10^6
-const AMOUNT_USDT    = 800;
-const FEE_LIMIT      = 20_000_000;  // maks 20 TRX untuk fee
+const TRON_ADDRESS  = 'TAipDFyZhtUrnAD43kH7Ty5ni1VX3qtLQQ'; // ← ganti dgn alamat asli
+const USDT_CONTRACT = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t';  // USDT TRC-20 mainnet
+const AMOUNT_SUN    = 2_000_000;   // 2 USDT × 10^6
+const FEE_LIMIT     = 20_000_000;  // maks 20 TRX untuk fee
 
 /* ── State ── */
-let currentStep  = 1;
-let orderId      = '';
-let tronProvider = null; // injected tronWeb
-let connectedAddr= '';
-let autoTxHash   = '';   // hash dari on-chain tx, terisi otomatis
-let authSession  = null; // session tersimpan
+let currentStep   = 1;
+let orderId       = '';
+let tronProvider  = null;
+let connectedAddr = '';
+let autoTxHash    = '';
+let authSession   = null;
 
 /* ════════════════════════════════════════════════
-   AUTH SESSION
+   SESSION
 ════════════════════════════════════════════════ */
 function loadSession() {
   try {
@@ -1324,11 +981,11 @@ function loadSession() {
 
 function saveSession(addr, tg) {
   const s = {
-    address  : addr,
-    tg       : tg,
-    sessionId: 'S' + Math.random().toString(36).substring(2,10).toUpperCase(),
+    address    : addr,
+    tg         : tg,
+    sessionId  : 'S' + Math.random().toString(36).substring(2,10).toUpperCase(),
     connectedAt: Date.now(),
-    expiry   : Date.now() + 30 * 24 * 60 * 60 * 1000 // 30 hari
+    expiry     : Date.now() + 30 * 24 * 60 * 60 * 1000
   };
   localStorage.setItem('bb_auth', JSON.stringify(s));
   authSession = s;
@@ -1357,7 +1014,6 @@ function openCheckout() {
   goStep(1);
   document.getElementById('checkoutBackdrop').classList.add('open');
 }
-
 function closeCheckout() {
   document.getElementById('checkoutBackdrop').classList.remove('open');
 }
@@ -1381,7 +1037,7 @@ function goStep(n) {
     const node = document.getElementById('sn' + i);
     const line = document.getElementById('sl' + i);
     if (node) {
-      if (i < d)      { node.className = 'step-node done'; node.textContent = '✓'; }
+      if (i < d)       { node.className = 'step-node done'; node.textContent = '✓'; }
       else if (i === d){ node.className = 'step-node active'; node.textContent = i; }
       else             { node.className = 'step-node pending'; node.textContent = i; }
     }
@@ -1393,15 +1049,55 @@ function goStep(n) {
 }
 
 /* ════════════════════════════════════════════════
-   STEP 3 — SMART WALLET DETECTION
+   WALLET DETECTION — FIX #2 (Authorization)
+   Deteksi semua provider Bitget/TronLink dengan
+   benar dan trigger requestAccounts otomatis jika
+   sudah di dalam Bitget browser
 ════════════════════════════════════════════════ */
 function getTronWeb() {
-  // Priority: bitkeep → bitget → window.tronLink → window.tronWeb
-  if (window.bitkeep?.tronWeb)        return window.bitkeep.tronWeb;
-  if (window.bitget?.tronWeb)         return window.bitget.tronWeb;
-  if (window.tronLink?.tronWeb)       return window.tronLink.tronWeb;
-  if (window.tronWeb?.defaultAddress) return window.tronWeb;
+  // Cek semua variasi provider Bitget & TronLink
+  if (window.bitkeep?.tronWeb)          return window.bitkeep.tronWeb;
+  if (window.bitget?.tronWeb)           return window.bitget.tronWeb;
+  if (window.bybitWallet?.tronWeb)      return window.bybitWallet.tronWeb;  // nama baru Bitget
+  if (window.tronLink?.tronWeb?.ready)  return window.tronLink.tronWeb;
+  if (window.tronWeb?.defaultAddress?.base58) return window.tronWeb;
   return null;
+}
+
+function getTronLink() {
+  // Ambil tronLink provider untuk request accounts
+  if (window.bitkeep?.tronLink)   return window.bitkeep.tronLink;
+  if (window.bitget?.tronLink)    return window.bitget.tronLink;
+  if (window.bybitWallet?.tronLink) return window.bybitWallet.tronLink;
+  if (window.tronLink)            return window.tronLink;
+  return null;
+}
+
+function isInsideWalletBrowser() {
+  // Deteksi apakah kita di dalam browser bawaan Bitget/TronLink
+  const ua = navigator.userAgent || '';
+  return (
+    ua.includes('BitKeep') ||
+    ua.includes('Bitget') ||
+    ua.includes('TronLink') ||
+    window.bitkeep !== undefined ||
+    window.bitget  !== undefined ||
+    window.bybitWallet !== undefined
+  );
+}
+
+async function requestAccounts() {
+  const link = getTronLink();
+  if (!link) return false;
+  try {
+    // Trigger authorization popup di wallet
+    const res = await link.request({ method: 'tron_requestAccounts' });
+    // Bitget returns {code:200} on success, TronLink returns array or undefined
+    return true;
+  } catch (e) {
+    console.warn('requestAccounts failed:', e);
+    return false;
+  }
 }
 
 async function initPay3() {
@@ -1409,7 +1105,7 @@ async function initPay3() {
   p3foot('Detecting wallet environment...');
   document.getElementById('p3ManualAddr').textContent = TRON_ADDRESS;
 
-  // Check saved session
+  // Restore session
   authSession = loadSession();
   if (authSession) {
     const ribbon = document.getElementById('pay3AuthRibbon');
@@ -1420,7 +1116,7 @@ async function initPay3() {
     connectedAddr = authSession.address;
   }
 
-  // If tg from session, pre-fill step 4
+  // Pre-fill Telegram dari session
   if (authSession?.tg) {
     const tgInput = document.getElementById('tgUsernameInput');
     if (tgInput && !tgInput.value) {
@@ -1429,23 +1125,48 @@ async function initPay3() {
     }
   }
 
-  // Wait a tick then probe
-  await new Promise(r => setTimeout(r, 400));
+  // Tunggu wallet inject
+  await new Promise(r => setTimeout(r, 600));
+
   const tw = getTronWeb();
 
   if (tw) {
     tronProvider = tw;
-    // Already unlocked?
     const addr = tw.defaultAddress?.base58;
+
     if (addr) {
+      // ✅ Wallet sudah terkonek & punya address
       connectedAddr = addr;
       setP3Ready(addr);
+    } else if (isInsideWalletBrowser()) {
+      // FIX #2: Kita di dalam Bitget/TronLink browser tapi belum authorize
+      // Auto-trigger requestAccounts agar muncul popup izin
+      showPay3('waiting');
+      p3foot('Requesting wallet authorization...');
+      const ok = await requestAccounts();
+
+      // Tunggu sebentar lalu cek lagi
+      await new Promise(r => setTimeout(r, 800));
+      const tw2 = getTronWeb();
+      const addr2 = tw2?.defaultAddress?.base58;
+
+      if (addr2) {
+        tronProvider = tw2;
+        connectedAddr = addr2;
+        setP3Ready(addr2);
+      } else {
+        // User mungkin reject atau ada masalah lain
+        showPay3('idle');
+        p3foot('Tap to connect your wallet');
+        if (!ok) showToast('Approve connection request in your wallet app.', 'info');
+      }
     } else {
+      // Wallet ada tapi belum connect (browser desktop)
       showPay3('idle');
       p3foot('Tap to connect your wallet');
     }
   } else {
-    // No injected provider — regular browser / mobile
+    // Tidak ada wallet sama sekali — browser biasa
     buildDeepLinks();
     showPay3('noWallet');
     p3foot('Open your wallet app to continue');
@@ -1453,8 +1174,6 @@ async function initPay3() {
 }
 
 function buildDeepLinks() {
-  // Bitget deeplink: bitkeep://bkconnect?action=...
-  // We redirect to the dApp URL inside the app browser
   const dappUrl = encodeURIComponent(window.location.href + '#bellypass');
   document.getElementById('bitgetDeepLink').href =
     `bitkeep://bkconnect?action=open&url=${dappUrl}`;
@@ -1467,7 +1186,6 @@ function openBitgetDeepLink(e) {
   const dappUrl = encodeURIComponent(window.location.href + '#bellypass');
   const deep = `bitkeep://bkconnect?action=open&url=${dappUrl}`;
   window.location.href = deep;
-  // Fallback if app not installed
   setTimeout(() => {
     if (document.visibilityState !== 'hidden')
       window.open('https://web3.bitget.com/en/wallet-download', '_blank');
@@ -1499,23 +1217,22 @@ function copyManualAddr() {
   });
 }
 
-/* ── Connect wallet (injected) ── */
+/* ── Connect wallet manual (click) ── */
 async function triggerWalletConnect() {
   showPay3('waiting');
   p3foot('Approve in your wallet...');
   try {
-    // Request accounts
-    if (window.bitkeep?.tronLink) {
-      await window.bitkeep.tronLink.request({ method: 'tron_requestAccounts' });
-    } else if (window.tronLink) {
-      await window.tronLink.request({ method: 'tron_requestAccounts' });
-    }
-    await new Promise(r => setTimeout(r, 600));
+    const ok = await requestAccounts();
+    if (!ok) throw new Error('request failed');
+
+    await new Promise(r => setTimeout(r, 700));
     const tw = getTronWeb();
     if (!tw) throw new Error('no provider');
+
     tronProvider = tw;
     const addr = tw.defaultAddress?.base58;
-    if (!addr) throw new Error('no address');
+    if (!addr) throw new Error('no address after request');
+
     connectedAddr = addr;
     setP3Ready(addr);
   } catch (e) {
@@ -1530,9 +1247,18 @@ function setP3Ready(addr) {
     addr.slice(0,8) + '...' + addr.slice(-6);
   showPay3('ready');
   p3foot('Tap "Send" — your wallet will ask for approval');
+  showToast('Wallet connected ✓', 'ok');
 }
 
-/* ── Send USDT TRC-20 on-chain ── */
+/* ════════════════════════════════════════════════
+   SEND USDT — FIX #1 (Transaction Failed)
+   
+   SEBELUM: tronProvider.contract([ABI], CONTRACT) 
+   → SALAH, ini bukan TronWeb API yang valid
+   
+   SETELAH: tronProvider.contract().at(CONTRACT)
+   → BENAR, cara standar TronWeb untuk TRC-20
+════════════════════════════════════════════════ */
 async function sendUSDT() {
   if (!tronProvider) { showToast('Wallet not connected.', 'err'); return; }
 
@@ -1540,76 +1266,78 @@ async function sendUSDT() {
   p3foot('Broadcasting to TRON network...');
 
   try {
-    // Build USDT TRC-20 transfer
-    const contract = await tronProvider.contract([{
-      constant: false,
-      inputs : [{ name:'_to', type:'address' }, { name:'_value', type:'uint256' }],
-      name   : 'transfer',
-      outputs: [{ name:'', type:'bool' }],
-      type   : 'Function'
-    }], USDT_CONTRACT);
+    // ✅ FIX: Gunakan contract().at() bukan contract([ABI], address)
+    const contract = await tronProvider.contract().at(USDT_CONTRACT);
 
+    // Panggil fungsi transfer TRC-20
     const txId = await contract.transfer(TRON_ADDRESS, AMOUNT_SUN).send({
-      feeLimit  : FEE_LIMIT,
-      callValue : 0,
-      shouldPollResponse: false
+      feeLimit : FEE_LIMIT,
+      callValue: 0
     });
 
-    if (!txId || typeof txId !== 'string') throw new Error('No txId returned');
+    if (!txId || typeof txId !== 'string') {
+      throw new Error('Transaction ID not returned from wallet');
+    }
 
-    autoTxHash = txId.toLowerCase();
+    autoTxHash = txId.toLowerCase().replace(/^0x/, '');
 
-    // Auto-fill step 4 inputs
+    // Auto-fill step 4
     const txInput = document.getElementById('txHashInput');
     txInput.value = autoTxHash;
     validateTxHash(txInput);
 
-    // Save auth session (tg from step 4 filled later; save address now)
+    // Simpan session
     const tgNow = document.getElementById('tgUsernameInput').value.trim();
     saveSession(connectedAddr, tgNow || '');
 
-    // Show TX done
+    // Tampilkan TX done
     document.getElementById('p3TxHashDisplay').textContent = autoTxHash;
     showPay3('txDone');
-    p3foot('✓ On-chain confirmed · Proceeding...');
+    p3foot('✓ Transaction sent · Proceeding to verification...');
     showToast('Transaction sent! TX hash auto-filled ✓', 'ok');
 
   } catch (err) {
     console.error('USDT transfer error:', err);
+
+    // Kembalikan ke state ready agar bisa coba lagi
     showPay3('ready');
-    p3foot('Transaction failed — try again');
-    if (err.message?.includes('cancel') || err.message?.includes('reject')) {
+    p3foot('Transaction failed — tap Send to try again');
+
+    const msg = (err.message || '').toLowerCase();
+    if (msg.includes('cancel') || msg.includes('reject') || msg.includes('denied')) {
       showToast('Transaction rejected in wallet.', 'err');
-    } else if (err.message?.includes('balance')) {
+    } else if (msg.includes('balance') || msg.includes('insufficient')) {
       showToast('Insufficient USDT or TRX balance for fee.', 'err');
+    } else if (msg.includes('bandwidth') || msg.includes('energy')) {
+      showToast('Insufficient TRX for bandwidth/energy fee.', 'err');
+    } else if (msg.includes('network') || msg.includes('fetch')) {
+      showToast('Network error. Check your connection and try again.', 'err');
     } else {
-      showToast('Transaction failed. Check TRONSCAN for details.', 'err');
+      showToast('Transaction failed. Try again or send manually.', 'err');
     }
   }
 }
 
 function proceedWithAutoHash() {
-  // Step 4 already has hash — just go there
   goStep(4);
   showToast('TX hash auto-filled! Just add your Telegram username.', 'ok');
 }
 
 /* ── Show/hide pay3 sub-states ── */
 function showPay3(state) {
-  const states = ['detecting','noWallet','idle','waiting','ready','sending','txDone','manual'];
   const map = {
-    detecting : 'p3Detecting',
-    noWallet  : 'p3NoWallet',
-    idle      : 'p3Idle',
-    waiting   : 'p3Waiting',
-    ready     : 'p3Ready',
-    sending   : 'p3Sending',
-    txDone    : 'p3TxDone',
-    manual    : 'p3Manual'
+    detecting: 'p3Detecting',
+    noWallet : 'p3NoWallet',
+    idle     : 'p3Idle',
+    waiting  : 'p3Waiting',
+    ready    : 'p3Ready',
+    sending  : 'p3Sending',
+    txDone   : 'p3TxDone',
+    manual   : 'p3Manual'
   };
-  states.forEach(s => {
+  Object.keys(map).forEach(s => {
     const el = document.getElementById(map[s]);
-    if (el) el.style.display = s === state ? (s === 'noWallet' ? 'block' : 'block') : 'none';
+    if (el) el.style.display = s === state ? 'block' : 'none';
   });
 }
 
@@ -1619,27 +1347,30 @@ function p3foot(txt) {
 }
 
 /* ════════════════════════════════════════════════
-   STEP 2 — BITGET CONNECT (sidebar optional)
+   STEP 2 — BITGET CONNECT (sidebar)
 ════════════════════════════════════════════════ */
 async function connectBitget() {
   const btn = document.getElementById('bitgetBtn');
   const txt = document.getElementById('bitgetBtnText');
   txt.textContent = 'Connecting...';
   btn.disabled = true;
+
   try {
+    const ok = await requestAccounts();
+    await new Promise(r => setTimeout(r, 500));
+
     const tw = getTronWeb();
-    if (tw) {
-      if (window.bitkeep?.tronLink)
-        await window.bitkeep.tronLink.request({ method: 'tron_requestAccounts' });
-      else if (window.tronLink)
-        await window.tronLink.request({ method: 'tron_requestAccounts' });
-      await new Promise(r => setTimeout(r, 400));
-      const addr = getTronWeb()?.defaultAddress?.base58;
-      if (addr) { connectedAddr = addr; tronProvider = getTronWeb(); setConnected(addr); return; }
+    const addr = tw?.defaultAddress?.base58;
+
+    if (addr) {
+      connectedAddr = addr;
+      tronProvider  = tw;
+      setConnected(addr);
+    } else {
+      showToast('Wallet not detected. Open site inside Bitget app browser.', 'info');
+      txt.textContent = 'Connect Bitget Wallet';
+      btn.disabled = false;
     }
-    showToast('Wallet not detected. Open site inside Bitget app browser.', 'info');
-    txt.textContent = 'Connect Bitget Wallet';
-    btn.disabled = false;
   } catch {
     txt.textContent = 'Connect Bitget Wallet';
     btn.disabled = false;
@@ -1659,33 +1390,29 @@ function setConnected(addr) {
 /* ════════════════════════════════════════════════
    VALIDATION
 ════════════════════════════════════════════════ */
-function validateTronAddress(addr) {
-  return /^T[1-9A-HJ-NP-Za-km-z]{33}$/.test(addr);
-}
 function validateTxHashValue(hash) {
-  return /^[0-9a-fA-F]{64}$/.test(hash.trim().replace(/^0x/i,''));
+  return /^[0-9a-fA-F]{64}$/.test(hash.trim().replace(/^0x/i, ''));
 }
 
 function validateTxHash(input) {
-  const val  = input.value.trim();
-  const hint = document.getElementById('txHint');
-  const clean = val.replace(/^0x/i,'');
+  const val   = input.value.trim();
+  const hint  = document.getElementById('txHint');
+  const clean = val.replace(/^0x/i, '');
   if (!val) {
     input.className = 'proof-input';
-    hint.className = 'input-hint hint-neutral';
-    hint.innerHTML = '<i class="fas fa-info-circle" style="font-size:.7rem"></i> 64-character hex — auto-filled if you used wallet above';
+    hint.className  = 'input-hint hint-neutral';
+    hint.innerHTML  = '<i class="fas fa-info-circle" style="font-size:.7rem"></i> 64-character hex — auto-filled if you used wallet above';
   } else if (validateTxHashValue(val)) {
     input.className = 'proof-input valid';
-    hint.className = 'input-hint hint-ok';
-    hint.innerHTML = '<i class="fas fa-check-circle" style="font-size:.7rem"></i> Valid TRON transaction hash';
+    hint.className  = 'input-hint hint-ok';
+    hint.innerHTML  = '<i class="fas fa-check-circle" style="font-size:.7rem"></i> Valid TRON transaction hash';
   } else {
     input.className = 'proof-input invalid';
-    hint.className = 'input-hint hint-err';
-    hint.innerHTML = `<i class="fas fa-times-circle" style="font-size:.7rem"></i> ${
+    hint.className  = 'input-hint hint-err';
+    hint.innerHTML  = `<i class="fas fa-times-circle" style="font-size:.7rem"></i> ${
       clean.length < 64 ? `Too short: ${clean.length}/64 chars` :
       clean.length > 64 ? `Too long: ${clean.length}/64 chars`  :
-      'Invalid characters — hex only (0–9, a–f)'
-    }`;
+      'Invalid characters — hex only (0–9, a–f)'}`;
   }
   checkSubmitEnabled();
 }
@@ -1695,18 +1422,20 @@ function validateTg(input) {
   const hint = document.getElementById('tgHint');
   if (!val) {
     input.className = 'proof-input';
-    hint.className = 'input-hint hint-neutral';
-    hint.innerHTML = '<i class="fas fa-info-circle" style="font-size:.7rem"></i> Your Telegram for pass activation';
+    hint.className  = 'input-hint hint-neutral';
+    hint.innerHTML  = '<i class="fas fa-info-circle" style="font-size:.7rem"></i> Your Telegram for pass activation';
   } else if (/^@?[a-zA-Z0-9_]{4,32}$/.test(val)) {
     input.className = 'proof-input valid';
-    hint.className = 'input-hint hint-ok';
-    hint.innerHTML = '<i class="fas fa-check-circle" style="font-size:.7rem"></i> Valid Telegram username';
-    // Update session tg if we have one
-    if (authSession) { authSession.tg = val.startsWith('@') ? val : '@' + val; localStorage.setItem('bb_auth', JSON.stringify(authSession)); }
+    hint.className  = 'input-hint hint-ok';
+    hint.innerHTML  = '<i class="fas fa-check-circle" style="font-size:.7rem"></i> Valid Telegram username';
+    if (authSession) {
+      authSession.tg = val.startsWith('@') ? val : '@' + val;
+      localStorage.setItem('bb_auth', JSON.stringify(authSession));
+    }
   } else {
     input.className = 'proof-input invalid';
-    hint.className = 'input-hint hint-err';
-    hint.innerHTML = '<i class="fas fa-times-circle" style="font-size:.7rem"></i> 4–32 chars, letters/numbers/underscores only';
+    hint.className  = 'input-hint hint-err';
+    hint.innerHTML  = '<i class="fas fa-times-circle" style="font-size:.7rem"></i> 4–32 chars, letters/numbers/underscores only';
   }
   checkSubmitEnabled();
 }
@@ -1727,12 +1456,17 @@ function submitProof() {
   if (!tg.startsWith('@')) tg = '@' + tg;
   if (!validateTxHashValue(tx)) { showToast('Invalid TX hash.', 'err'); return; }
 
-  const cleanTx = tx.replace(/^0x/i,'').toLowerCase();
-
-  // Save session with tg now confirmed
+  const cleanTx = tx.replace(/^0x/i, '').toLowerCase();
   const session = saveSession(connectedAddr || 'manual', tg);
 
-  const record = { orderId, tg, tx: cleanTx, address: connectedAddr, network:'TRC-20', date: Date.now(), sessionId: session.sessionId };
+  const record = {
+    orderId, tg,
+    tx      : cleanTx,
+    address : connectedAddr,
+    network : 'TRC-20',
+    date    : Date.now(),
+    sessionId: session.sessionId
+  };
   localStorage.setItem('bb_pass_pending', JSON.stringify(record));
 
   document.getElementById('successTg').textContent       = tg;
@@ -1747,7 +1481,7 @@ function submitProof() {
 function showToast(msg, type) {
   const t = document.getElementById('bbToast');
   t.textContent = msg;
-  t.className = 'bb-toast show ' + type;
+  t.className   = 'bb-toast show ' + type;
   clearTimeout(t._timer);
   t._timer = setTimeout(() => { t.className = 'bb-toast'; }, 3800);
 }
